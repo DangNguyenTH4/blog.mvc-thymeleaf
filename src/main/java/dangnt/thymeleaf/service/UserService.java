@@ -1,6 +1,6 @@
 package dangnt.thymeleaf.service;
 
-import dangnt.thymeleaf.model.User;
+import dangnt.thymeleaf.object.model.User;
 import java.util.List;
 import java.util.Optional;
 

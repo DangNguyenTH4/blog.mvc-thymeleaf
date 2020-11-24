@@ -1,6 +1,6 @@
 package dangnt.thymeleaf.repository;
 
-import dangnt.thymeleaf.model.User;
+import dangnt.thymeleaf.object.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

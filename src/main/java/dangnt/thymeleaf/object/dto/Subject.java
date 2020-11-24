@@ -1,4 +1,4 @@
-package dangnt.thymeleaf.dto;
+package dangnt.thymeleaf.object.dto;
 
 import java.util.List;
 

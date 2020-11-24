@@ -1,7 +1,7 @@
 package dangnt.thymeleaf.facade;
 
-import dangnt.thymeleaf.dto.Post;
-import dangnt.thymeleaf.dto.Subject;
+import dangnt.thymeleaf.object.dto.Post;
+import dangnt.thymeleaf.object.dto.Subject;
 
 public interface FacadeApi {
   Post getPost();

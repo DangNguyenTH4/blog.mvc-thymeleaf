@@ -1,6 +1,6 @@
 package dangnt.thymeleaf.service.impl;
 
-import dangnt.thymeleaf.model.User;
+import dangnt.thymeleaf.object.model.User;
 import dangnt.thymeleaf.repository.UserRepository;
 import dangnt.thymeleaf.service.UserService;
 import java.util.List;
