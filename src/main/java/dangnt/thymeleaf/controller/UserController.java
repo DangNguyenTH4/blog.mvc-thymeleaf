@@ -1,7 +1,7 @@
 package dangnt.thymeleaf.controller;
 
-import dangnt.thymeleaf.object.model.User;
-import dangnt.thymeleaf.service.UserService;
+import dangnt.thymeleaf.object.model.FriendEntity;
+import dangnt.thymeleaf.service.FriendService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,46 +12,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/friends")
 public class UserController {
-  @Autowired private UserService userService;
+  @Autowired private FriendService userService;
 
-  @RequestMapping("/")
+  @RequestMapping({"/",""})
   public String index(Model model) {
-    List<User> users = userService.getAllUser();
+    List<FriendEntity> users = userService.getAllUser();
 //    User user = new User();
 //    user.setEmail("dangnt@fsoft.com.vn");
 //    user.setId(1L);
 //    user.setName("DangNT");
 //    user.setPhone("0976949132");
 //    users.add(user);
-    model.addAttribute("title", "hello title");
+    model.addAttribute("title", "About my friend!");
     model.addAttribute("users", users);
 
-    return "index";
+    return "friendlist";
   }
 
   @RequestMapping(value = "add")
   public String addUser(Model model) {
-    model.addAttribute("user", new User());
+    model.addAttribute("user", new FriendEntity());
+    model.addAttribute("title", "New friend!!!");
     return "addUser";
   }
 
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String editUser(@RequestParam("id") Long userId, Model model) {
-    Optional<User> userEdit = userService.findUserById(userId);
+    Optional<FriendEntity> userEdit = userService.findUserById(userId);
     userEdit.ifPresent(user -> model.addAttribute("user", user));
     return "editUser";
   }
 
   @RequestMapping(value = "save", method = RequestMethod.POST)
-  public String save(User user) {
+  public String save(FriendEntity user) {
     userService.saveUser(user);
-    return "redirect:/";
+    return "redirect:/friends";
   }
 
-  @RequestMapping(value = "/delete", method = RequestMethod.GET)
-  public String deleteUser(@RequestParam("id") Long userId, Model model) {
-    userService.deleteUser(userId);
-    return "redirect:/";
-  }
+//  @RequestMapping(value = "/delete", method = RequestMethod.GET)
+//  public String deleteUser(@RequestParam("id") Long userId, Model model) {
+//    userService.deleteUser(userId);
+//    return "redirect:/";
+//  }
 }

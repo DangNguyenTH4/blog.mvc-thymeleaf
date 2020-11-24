@@ -13,8 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "friend")
+public class FriendEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -28,12 +28,15 @@ public class User {
   @Column(name = "phone")
   private String phone;
 
+  private String relationShip;
 
-  public User() {}
 
-  public User(String name, String email, String phone) {
+  public FriendEntity() {}
+
+  public FriendEntity(String name, String email, String phone, String relationShip) {
     this.name = name;
     this.email = email;
     this.phone = phone;
+    this.relationShip = relationShip;
   }
 }

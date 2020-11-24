@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
   <meta charset="UTF-8">
-  <title>${title}</title>
+  <title th:text="${title}"></title>
   <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" th:href="@{../css/bootstrap.min.css}"/>
 </head>
 <body>
 <div class="col-3"></div>
 <div class="container col-6">
-  <h1>New User</h1>
+  <h1>New Friend</h1>
   <div class="col-md-auto">
     <form th:object="${user}" th:action="@{save}" action="#" method="post">
       <div>
@@ -24,6 +24,10 @@
       <div>
         <label th:text="Phone" th:for="phone"></label>
         <input type="text" th:field="*{phone}" class="form-control" placeholder="Phone"/>
+      </div>
+      <div>
+        <label th:text="RelationShip" th:for="relationShip"></label>
+        <input type="text" th:field="*{relationShip}" class="form-control" placeholder="RelationShip"/>
       </div>
       <div style="clear: both; display: block; height: 10px"></div>
       <input type="submit" class="btn btn-success" value="Save"/>

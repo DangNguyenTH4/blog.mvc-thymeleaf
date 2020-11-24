@@ -8,7 +8,7 @@
 <body>
 <div class="col-3"></div>
 <div class="container col-6">
-  <h1>Manage User</h1>
+  <h1>Dang's friends</h1>
   <table class="table table-active">
     <tr>
       <th>Name</th>
@@ -21,12 +21,12 @@
       <td th:text="${user.email}"></td>
       <td th:text="${user.phone}"></td>
       <td>
-        <a th:href="@{/edit?id={id}(id=${user.id})}" class="btn btn-primary">Edit</a>
-        <a th:href="@{/delete?id={id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+        <a th:href="@{/friends/edit?id={id}(id=${user.id})}" class="btn btn-primary">Edit</a>
+<!--        <a th:href="@{/friends/delete?id={id}(id=${user.id})}" class="btn btn-danger">Delete</a>-->
       </td>
     </tr>
   </table>
-  <a href="/add" class="btn btn-success">Add User</a>
+  <a href="/friends/add" class="btn btn-success">Add Friend</a>
   <img src="http://localhost:8081/load/file/download.jpg">
 </div>
 </body>

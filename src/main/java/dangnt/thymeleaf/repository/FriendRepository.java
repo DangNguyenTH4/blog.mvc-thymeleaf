@@ -1,10 +1,10 @@
 package dangnt.thymeleaf.repository;
 
-import dangnt.thymeleaf.object.model.User;
+import dangnt.thymeleaf.object.model.FriendEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface FriendRepository extends JpaRepository<FriendEntity, Long> {
 
 }
