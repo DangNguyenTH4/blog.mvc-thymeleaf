@@ -8,6 +8,7 @@ public interface FriendService {
   List<FriendEntity> getAllUser();
 
   void saveUser(FriendEntity user);
+  void updateUser(FriendEntity user);
 
   void deleteUser(Long id);
 

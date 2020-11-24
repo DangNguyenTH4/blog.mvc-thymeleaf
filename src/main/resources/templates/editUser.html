@@ -9,7 +9,7 @@
 <div class="col-3"></div>
 <div class="container col-6">
   <h1>Edit User</h1>
-  <form th:object="${user}" th:action="@{save}" action="#" method="post">
+  <form th:object="${user}" th:action="@{update}" action="#" method="post">
     <input type="hidden" th:field="*{id}">
     <div>
       <label th:text="Name" th:for="name"></label>

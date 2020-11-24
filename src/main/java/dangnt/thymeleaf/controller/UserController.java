@@ -51,6 +51,13 @@ public class UserController {
     return "redirect:/friends";
   }
 
+  @RequestMapping(value = "update", method = RequestMethod.POST)
+  public String update(FriendEntity user) {
+    userService.updateUser(user);
+    return "redirect:/friends";
+  }
+
+
 //  @RequestMapping(value = "/delete", method = RequestMethod.GET)
 //  public String deleteUser(@RequestParam("id") Long userId, Model model) {
 //    userService.deleteUser(userId);

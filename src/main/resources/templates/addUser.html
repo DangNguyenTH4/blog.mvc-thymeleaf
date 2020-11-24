@@ -29,6 +29,10 @@
         <label th:text="RelationShip" th:for="relationShip"></label>
         <input type="text" th:field="*{relationShip}" class="form-control" placeholder="RelationShip"/>
       </div>
+      <div>
+        <label th:text="WhoYouAre" th:for="createBy"></label>
+        <input type="text" th:field="*{createBy}" class="form-control" placeholder="Tell me who you are?"/>
+      </div>
       <div style="clear: both; display: block; height: 10px"></div>
       <input type="submit" class="btn btn-success" value="Save"/>
     </form>

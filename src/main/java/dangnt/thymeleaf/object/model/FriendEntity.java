@@ -1,5 +1,6 @@
 package dangnt.thymeleaf.object.model;
 
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,13 +31,20 @@ public class FriendEntity {
 
   private String relationShip;
 
+  private String createBy;
+
+  private Timestamp created;
+  private Timestamp updated;
+
+  private String updateBy;
 
   public FriendEntity() {}
 
-  public FriendEntity(String name, String email, String phone, String relationShip) {
+  public FriendEntity(String name, String email, String phone, String relationShip, String createBy) {
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.relationShip = relationShip;
+    this.createBy = createBy;
   }
 }
