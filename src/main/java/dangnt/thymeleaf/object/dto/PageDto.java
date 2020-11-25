@@ -14,6 +14,6 @@ public class PageDto {
     private Map<String, Object> body; // Article , Subject, ...
     private Object footer;
     private List<YearlyArticleDto> articleMenu;
-    private List<?> topMenu;
+    private List<MenuSubjectDto> topMenu;
 
 }

@@ -5,21 +5,29 @@ import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.MonthlyArticleDto;
 import dangnt.thymeleaf.object.dto.PostDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.model.ImageLinkEntity;
 import dangnt.thymeleaf.object.model.PostEntity;
+import dangnt.thymeleaf.repository.ImageLinkRepository;
 import dangnt.thymeleaf.repository.PostRepository;
 import dangnt.thymeleaf.service.PostService;
+import dangnt.thymeleaf.templateutils.TemplateService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.swing.text.html.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.thymeleaf.context.Context;
 import org.thymeleaf.util.DateUtils;
 
 @Service("PostServiceImpl")
@@ -29,11 +37,32 @@ public class PostServiceImpl implements PostService {
   private PostRepository postRepository;
 
   @Autowired
+  private ImageLinkRepository imageLinkRepository;
+
+  @Autowired
   private PostEntityMapper postMapper;
+
+  @Autowired
+  private TemplateService templateService;
+
 
   @Override
   public PostDto findPostById(Long postId) {
-    return null;
+    Optional<PostEntity> entityOptional = postRepository.findById(postId);
+    PostDto postDto = null;
+
+    if(entityOptional.isPresent()){
+      postDto = postMapper.toPostDto(entityOptional.get());
+      //Fill imageLink into content!
+      List<ImageLinkEntity> imageLinks = imageLinkRepository.findByPostId(postId);
+      Map<String, ImageLinkEntity> mapImageLinks = imageLinks.stream()
+          .collect(Collectors.toMap(ImageLinkEntity::getName, Function.identity()));
+      Context context = new Context();
+      context.setVariable("imageLinks", mapImageLinks);
+      postDto.setContent(templateService.merge(postDto.getContent(), context));
+    }
+    return postDto;
+
   }
 
   @Override

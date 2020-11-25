@@ -13,9 +13,11 @@
     /* width: 200px;
     height: 1000px; */
     color: white;
-    height: 1000px;
+    height: 100%;
     background-color: white;
-    padding-top: 5px;
+    padding-top: 200px;
+    position: fixed;
+    z-index: 2;
 }
 #content{
     /* float: left; */
@@ -25,6 +27,7 @@
     height: 1000px;
     background-color: whitesmoke;
     padding-top: 5px;
+    padding-left: px;
 }
 #ads{
     /* height: 100px; */

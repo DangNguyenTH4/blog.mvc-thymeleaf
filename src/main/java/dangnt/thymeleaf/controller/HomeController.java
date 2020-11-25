@@ -17,12 +17,7 @@ public class HomeController {
   @GetMapping
   public String getHome(Model model){
     PageDto pageDto = facadeApi.getArticle(1L);
-    model.addAttribute("head", pageDto.getHead());
-    model.addAttribute("articleMenu", pageDto.getArticleMenu());
-    model.addAttribute("footer", pageDto.getFooter());
-    model.addAttribute("topMenu", pageDto.getTopMenu());
-    model.addAllAttributes(pageDto.getBody());
-    model.addAllAttributes(pageDto.getBody());
+    ControllerUtils.buildModelForPage(model, pageDto);
     return "home";
   }
 }

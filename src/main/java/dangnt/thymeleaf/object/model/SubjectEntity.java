@@ -23,4 +23,6 @@ public class SubjectEntity extends BaseEntity {
   private String description;
   @ManyToMany(mappedBy = "subjects")
   private List<PostEntity> articles = new ArrayList<>();
+  private Long parentSubject;
+  private Integer index;
 }

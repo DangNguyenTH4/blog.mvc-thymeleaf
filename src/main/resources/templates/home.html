@@ -27,32 +27,31 @@
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Dang-thAn-thieN's bloG</a>
     <div class="listdropdown col align-self-end">
-      <div class="dropdown">
-        <button class="dropbtn">Kể về người</button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn">Kể về đời</button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn">Kể về nghề</button>
-        <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
+      <div class="btn-group" >
+        <th:block  th:each="subject: ${topMenu}">
+          <div type="button" class="dropdown btn btn-dark"  >
+            <span th:text="${subject.name}"> Apple</span>
+            <div class="dropdown-content" >
+              <th:block  th:each="subSubject : ${subject.subSubject}">
+                <a href="#" th:text="${subSubject.name}">LinkLinkLinkLinkLinkLinkLink 1</a>
+              </th:block>
+            </div>
+          </div>
+        </th:block>
       </div>
     </div>
   </nav>
+</div>
+
+<div id="menu" class="col-md-1" >
+  <div  th:each="yearly : ${articleMenu}">
+    <button class="dropdown-btn-menu" th:text="${yearly.year}">2021
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container" >
+      <a href="#" th:href="@{/article/} + ${yearly.year} + '/' + ${monthly.month}" th:each="monthly : ${yearly.yearlyArticles}" th:text="'Tháng ' + ${monthly.month}">Tháng 9</a>
+    </div>
+  </div>
 </div>
 <section>
   <div id="header" class="row">
@@ -60,45 +59,40 @@
   </div>
 </section>
 <div class="page row">
-  <div id="menu" class="col-md-1" >
-    <div  th:each="yearly : ${articleMenu}">
-      <button class="dropdown-btn-menu" th:text="${yearly.year}">2021
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-container" >
-        <a href="#" th:href="@{/article/} + ${yearly.year} + '/' + ${monthly.month}" th:each="monthly : ${yearly.yearlyArticles}" th:text="'Tháng ' + ${monthly.month}">Tháng 9</a>
-      </div>
-    </div>
-  </div>
-  <div id="content" class="col-md-6">
-    <div th:utext="${content}">Here is in database</div>
-  </div>
-  <div id="ads" class="col-md-4">
-  </div>
-</div>
-<section>
-  <div id="footer" class="row">
+  <div class="container-fluid float-left offset-1">
     <div class="row">
-      <ul>
-        <li>
-          <a target="_blank" href="https://www.facebook.com/notnullpointer">
-            <i class="fa fa-facebook-official"></i>
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://www.linkedin.com/in/mai-ha-860395183">
-            <i class="fa fa-linkedin"></i>
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://github.com/DangNguyenTH4">
-            <i class="fa fa-github"></i>
-          </a>
-        </li>
-      </ul>
+      <div id="content" class="col-md-6 ">
+        <div th:utext="${article.post.content}">Here is in database</div>
+      </div>
+      <div id="ads" class="col-md-4"> ADS Here</div>
     </div>
   </div>
-</section>
+
+
+</div>
+<!--<section>-->
+<!--  <div id="footer" class="row">-->
+<!--    <div class="row">-->
+<!--      <ul>-->
+<!--        <li>-->
+<!--          <a target="_blank" href="https://www.facebook.com/notnullpointer">-->
+<!--            <i class="fa fa-facebook-official"></i>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a target="_blank" href="https://www.linkedin.com/in/mai-ha-860395183">-->
+<!--            <i class="fa fa-linkedin"></i>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a target="_blank" href="https://github.com/DangNguyenTH4">-->
+<!--            <i class="fa fa-github"></i>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
 <script th:src="@{../js/dropdown.js}">
 </script>
 </body>

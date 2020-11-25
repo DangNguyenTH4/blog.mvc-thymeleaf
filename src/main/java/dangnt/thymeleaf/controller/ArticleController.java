@@ -18,33 +18,23 @@ public class ArticleController {
     @GetMapping("/{postId}")
     public String getAnArticle(Model model, @PathVariable("postId") Long postId){
         PageDto pageDto = facadeApi.getArticle(postId);
-        model.addAttribute("head", pageDto.getHead());
-        model.addAttribute("articleMenu", pageDto.getArticleMenu());
-        model.addAttribute("footer", pageDto.getFooter());
-        model.addAttribute("topMenu", pageDto.getTopMenu());
-        model.addAllAttributes(pageDto.getBody());
+        ControllerUtils.buildModelForPage(model, pageDto);
         return "anArticle";
     }
 
     @GetMapping("/{year}/{month}")
-    public String getArticles(Model model, @PathVariable("year") Integer year, @PathVariable("month") Integer month) {
+    public String getArticles(Model model, @PathVariable("year") Integer year,
+        @PathVariable("month") Integer month) {
         PageDto pageDto = facadeApi.getArticle(1L);
-        model.addAttribute("head", pageDto.getHead());
-        model.addAttribute("articleMenu", pageDto.getArticleMenu());
-        model.addAttribute("footer", pageDto.getFooter());
-        model.addAttribute("topMenu", pageDto.getTopMenu());
-        model.addAllAttributes(pageDto.getBody());
+        ControllerUtils.buildModelForPage(model, pageDto);
         return "anArticle";
     }
 
     @GetMapping("/{year}/{month}/{postId}")
-    public String getAnArticleInMonth(Model model, @PathVariable("year") Integer year, @PathVariable("month") Integer month, @PathVariable("postId") Long postId) {
+    public String getAnArticleInMonth(Model model, @PathVariable("year") Integer year,
+        @PathVariable("month") Integer month, @PathVariable("postId") Long postId) {
         PageDto pageDto = facadeApi.getArticle(postId);
-        model.addAttribute("head", pageDto.getHead());
-        model.addAttribute("articleMenu", pageDto.getArticleMenu());
-        model.addAttribute("footer", pageDto.getFooter());
-        model.addAttribute("topMenu", pageDto.getTopMenu());
-        model.addAllAttributes(pageDto.getBody());
+        ControllerUtils.buildModelForPage(model, pageDto);
         return "anArticle";
     }
 }

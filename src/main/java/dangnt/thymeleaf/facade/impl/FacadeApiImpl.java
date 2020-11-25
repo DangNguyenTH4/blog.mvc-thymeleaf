@@ -4,6 +4,7 @@ import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.ImageLinkDto;
+import dangnt.thymeleaf.object.dto.MenuSubjectDto;
 import dangnt.thymeleaf.object.dto.MetaContentDto;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PostDto;
@@ -32,22 +33,27 @@ public class FacadeApiImpl implements FacadeApi {
 
     @Override
     public PageDto getArticle(Long postId) {
-        PostDto postEntity = postService.findPostById(postId);
+        //Build Head
         List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
         HeadDto headDto = headerService.findByPostId(postId);
         headDto.setMetaContents(metadataEntities);
 
-        List<ImageLinkDto> imageLinkEntities = imageLinkService.findByPostId(postId);
+        //Build Top Menu
+        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
+
+        //Build body
+        PostDto postEntity = postService.findPostById(postId);
         Article article = Article.builder().id(postId)
                 .post(postEntity)
-                .imageLinks(imageLinkEntities)
                 .contentProperties(null).build();
         Map<String, Object> body = new HashMap<>();
         body.put("article", article);
+
+        //TODO: build topMenu, build footer...
         return PageDto.builder()
-                .head(headDto )
-                .topMenu(null)
-                .articleMenu(postService.findAllMenuPost())
+                .head(headDto)
+                .topMenu(topMenu)
+                .articleMenu(postService.findAllMenuPost()) // Build left menu
                 .body(body)
                 .footer(null)
                 .build();

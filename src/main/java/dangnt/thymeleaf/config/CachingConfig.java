@@ -28,7 +28,7 @@ public class CachingConfig {
 //    CacheManager cacheManager2 = new NoOpCacheManager();
 //    CacheManager cacheManager3 = new ConcurrentMapCacheManager();
     cacheManager.setCaches(Arrays.asList(
-//        new ConcurrentMapCache("directory"),
+        new ConcurrentMapCache("topMenu"),
         new ConcurrentMapCache("articleMenu")));
     return cacheManager;
   }
