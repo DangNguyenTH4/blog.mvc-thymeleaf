@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "meta_data", schema = "blog")
 @Getter
 @Setter
-public class MetadataEntity {
+public class MetadataEntity extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

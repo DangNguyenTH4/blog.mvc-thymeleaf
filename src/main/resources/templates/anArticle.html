@@ -8,5 +8,22 @@
     <h1>Hello world! I'm Dang!</h1>
     <h1>Good luck for you, and good luck for me!</h1>
     <h1>Hello <span th:text="${key1}">Key1 hể</span></h1>
+    <h1 th:text="${articleMenu.get(0).year}"></h1>
+    <h1 th:text="${articleMenu.get(0).yearlyArticles.size()}"></h1>
+    <h1 th:text="${articleMenu.get(0).yearlyArticles.get(0).month}"></h1>
+    <h1 th:text="${articleMenu.get(0).yearlyArticles.get(0).monthlyArticles}"></h1>
+    <div th:each="yearly : ${articleMenu}">
+        <h1 th:text="${yearly.year}"></h1>
+        <div>
+            <ul th:each="monthly : ${yearly.yearlyArticles}">
+                <li th:text="${monthly.month}"></li>
+            </ul>
+        </div>
+    </div>
+<!--    <ul th:each="article : ${articleMenu.get(0).yearlyArticles.get(0).monthlyArticles}">-->
+<!--        <li><a th:href="@{/article/}+${article.id}" th:text="${article.post.title}"></a></li>-->
+<!--    </ul>-->
+
+<!--    <h1 th:each="article : ${articleMenu.get(0).yearlyArticles.get(0).monthlyArticles}" th:text="${article}"></h1>-->
 </body>
 </html>

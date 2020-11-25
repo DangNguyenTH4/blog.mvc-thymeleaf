@@ -1,0 +1,51 @@
+#header{
+    margin-top: 40px;
+    height: 60px;
+    /* width: 100%; */
+    background-color: black;
+}
+.header-top select{
+    border: none;
+}
+#menu{
+    /* float: left; */
+    /* width: 200px;
+    height: 1000px; */
+    color: white;
+    height: 1000px;
+    background-color: white;
+    padding-top: 5px;
+}
+#content{
+    /* float: left; */
+    /* margin-left: 250px; */
+    /* height: 100px; */
+    /* width: 100%; */
+    height: 1000px;
+    background-color: whitesmoke;
+    padding-top: 5px;
+}
+#ads{
+    /* height: 100px; */
+    /* width: 100%; */
+    height: 1000px;
+    background-color:white;
+    padding-top: 5px;
+}
+#footer{
+    justify-content: center;
+    color: white;
+    height: 30px;
+    /* width: 100%; */
+    background-color: black;
+}
+#footer li {
+    float: left;
+    list-style-type: none;
+  }
+  
+#footer a {
+    display: block;
+    padding: 3px;
+    background-color: black;
+  }

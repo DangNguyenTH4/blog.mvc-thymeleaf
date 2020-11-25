@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "img_link", schema = "blog")
 @Getter
 @Setter
-public class ImageLinkEntity {
+public class ImageLinkEntity extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

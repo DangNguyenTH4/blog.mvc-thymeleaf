@@ -1,0 +1,18 @@
+#header div {
+  width: 200px;
+  height: 60px;
+  /* background-color: red; */
+  /* background-image:  url("dragon.gif"); */
+  background-image:  url("https://i.ibb.co/LCg22yh/dragon3.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  animation: myfirst 15s 2s infinite alternate;
+}
+
+@keyframes myfirst {
+    0%   {left:0px; top:0px;}
+    50%  {background-image:  url("https://i.ibb.co/7p0Cfsw/dragon3-rotate.gif"); left:90%; top:0px;}
+    100% {left:0px; top:0px;}
+  }

@@ -19,10 +19,12 @@ import lombok.Setter;
 @Table(name = "post", schema = "blog")
 @Getter
 @Setter
-public class PostEntity {
+public class PostEntity extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  private String title;
 
   @Column(name = "content", columnDefinition="TEXT")
   private String content;

@@ -36,13 +36,13 @@ public class FacadeApiImpl implements FacadeApi {
         List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
         HeaderDto headerEntity = headerService.findByPostId(postId);
         List<ImageLinkDto> imageLinkEntities = imageLinkService.findByPostId(postId);
-        Map<String, String> testMapThymeLeaf = new HashMap<>();
-        testMapThymeLeaf.put("key1", "value1");
-        testMapThymeLeaf.put("key2", "value3");
-        testMapThymeLeaf.put("key3", "value3");
+        Map<String, Object> otherContentProperties = new HashMap<>();
+        otherContentProperties.put("articleMenu", postService.findAllMenuPost());
+        otherContentProperties.put("key2", "value3");
+        otherContentProperties.put("key3", "value3");
         return Article.builder().id(postId).metaContents(metadataEntities)
                 .header(headerEntity).post(postEntity).imageLinks(imageLinkEntities)
-                .contentProperties(testMapThymeLeaf).build();
+                .contentProperties(otherContentProperties).build();
     }
 
     @Override

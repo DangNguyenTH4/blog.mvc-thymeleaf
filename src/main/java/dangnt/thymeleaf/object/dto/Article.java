@@ -13,5 +13,5 @@ public class Article {
   private List<MetaContentDto> metaContents;
   private List<ImageLinkDto> imageLinks;
   private HeaderDto header;
-  private Map<String, String> contentProperties;
+  private Map<String, Object> contentProperties;
 }

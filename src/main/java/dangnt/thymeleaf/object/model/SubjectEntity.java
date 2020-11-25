@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "subject", schema = "blog")
 @Getter
 @Setter
-public class SubjectEntity {
+public class SubjectEntity extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
