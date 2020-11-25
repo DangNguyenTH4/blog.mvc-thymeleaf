@@ -2,9 +2,10 @@ package dangnt.thymeleaf.facade.impl;
 
 import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.Article;
-import dangnt.thymeleaf.object.dto.HeaderDto;
+import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.ImageLinkDto;
 import dangnt.thymeleaf.object.dto.MetaContentDto;
+import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PostDto;
 import dangnt.thymeleaf.object.dto.SubjectDto;
 import dangnt.thymeleaf.service.HeaderService;
@@ -15,7 +16,6 @@ import dangnt.thymeleaf.service.SubjectService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
 
 //@Service("FacadeApiImpl")
 public class FacadeApiImpl implements FacadeApi {
@@ -31,43 +31,52 @@ public class FacadeApiImpl implements FacadeApi {
     private SubjectService subjectService;
 
     @Override
-    public Article getArticle(Long postId) {
+    public PageDto getArticle(Long postId) {
         PostDto postEntity = postService.findPostById(postId);
         List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
-        HeaderDto headerEntity = headerService.findByPostId(postId);
+        HeadDto headDto = headerService.findByPostId(postId);
+        headDto.setMetaContents(metadataEntities);
+
         List<ImageLinkDto> imageLinkEntities = imageLinkService.findByPostId(postId);
-        Map<String, Object> otherContentProperties = new HashMap<>();
-        otherContentProperties.put("articleMenu", postService.findAllMenuPost());
-        otherContentProperties.put("key2", "value3");
-        otherContentProperties.put("key3", "value3");
-        return Article.builder().id(postId).metaContents(metadataEntities)
-                .header(headerEntity).post(postEntity).imageLinks(imageLinkEntities)
-                .contentProperties(otherContentProperties).build();
+        Article article = Article.builder().id(postId)
+                .post(postEntity)
+                .imageLinks(imageLinkEntities)
+                .contentProperties(null).build();
+        Map<String, Object> body = new HashMap<>();
+        body.put("article", article);
+        return PageDto.builder()
+                .head(headDto )
+                .topMenu(null)
+                .articleMenu(postService.findAllMenuPost())
+                .body(body)
+                .footer(null)
+                .build();
+
     }
 
     @Override
-    public SubjectDto getSubject(String subjectName) {
+    public PageDto getSubject(String subjectName) {
         return null;
     }
 
     @Override
-    public Object search(String typeToSearch, String keyWord) {
+    public PageDto search(String typeToSearch, String keyWord) {
         return null;
     }
 
     @Override
-    public Object fullTextSearch(String keyWord) {
+    public PageDto fullTextSearch(String keyWord) {
         return null;
     }
 
 
     @Override
-    public Object getHome() {
+    public PageDto getHome() {
         return null;
     }
 
     @Override
-    public Object getAnObject() {
+    public PageDto getAnObject() {
         return null;
     }
 }

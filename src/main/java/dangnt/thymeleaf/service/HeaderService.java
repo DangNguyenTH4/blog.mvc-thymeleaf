@@ -1,7 +1,7 @@
 package dangnt.thymeleaf.service;
 
-import dangnt.thymeleaf.object.dto.HeaderDto;
+import dangnt.thymeleaf.object.dto.HeadDto;
 
 public interface HeaderService {
-    HeaderDto findByPostId(Long postId);
+    HeadDto findByPostId(Long postId);
 }

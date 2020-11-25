@@ -10,8 +10,6 @@ import lombok.Getter;
 public class Article {
   private Long id;
   private PostDto post;
-  private List<MetaContentDto> metaContents;
   private List<ImageLinkDto> imageLinks;
-  private HeaderDto header;
   private Map<String, Object> contentProperties;
 }

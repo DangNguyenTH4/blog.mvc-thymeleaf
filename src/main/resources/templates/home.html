@@ -60,27 +60,13 @@
   </div>
 </section>
 <div class="page row">
-  <div id="menu" class="col-md-1">
-    <div>
-      <button class="dropdown-btn-menu">2021
+  <div id="menu" class="col-md-1" >
+    <div  th:each="yearly : ${articleMenu}">
+      <button class="dropdown-btn-menu" th:text="${yearly.year}">2021
         <i class="fa fa-caret-down"></i>
       </button>
-      <div class="dropdown-container">
-        <a href="#">Tháng 9</a>
-        <a href="#">Tháng 10</a>
-        <a href="#">Tháng 11</a>
-        <a href="#">Tháng 12</a>
-      </div>
-    </div>
-    <div>
-      <button class="dropdown-btn-menu">2020
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-container">
-        <a href="#">Tháng 9</a>
-        <a href="#">Tháng 10</a>
-        <a href="#">Tháng 11</a>
-        <a href="#">Tháng 12</a>
+      <div class="dropdown-container" >
+        <a href="#" th:href="@{/article/} + ${yearly.year} + '/' + ${monthly.month}" th:each="monthly : ${yearly.yearlyArticles}" th:text="'Tháng ' + ${monthly.month}">Tháng 9</a>
       </div>
     </div>
   </div>

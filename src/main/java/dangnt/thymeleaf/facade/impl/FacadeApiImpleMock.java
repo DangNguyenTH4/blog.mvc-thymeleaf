@@ -2,19 +2,16 @@ package dangnt.thymeleaf.facade.impl;
 
 import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.Article;
-import dangnt.thymeleaf.object.dto.HeaderDto;
-import dangnt.thymeleaf.object.dto.MonthlyArticleDto;
-import dangnt.thymeleaf.object.dto.PostDto;
+import dangnt.thymeleaf.object.dto.HeadDto;
+import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.SubjectDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
 import dangnt.thymeleaf.service.PostService;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service("FacadeApiImpleMock")
@@ -24,40 +21,47 @@ public class FacadeApiImpleMock implements FacadeApi {
     private PostService postService;
     @Override
 //    @Cacheable(value = "articleMenu")
-    public Article getArticle(Long postId) {
+    public PageDto getArticle(Long postId) {
         log.info("Get Articleeeee");
-        HeaderDto headerDto = new HeaderDto();
+        HeadDto headerDto = new HeadDto();
         headerDto.setTitle("Mock article title!");
-        Map<String, Object> content = new HashMap<>();
-        content.put("key1","hả");
-        List<YearlyArticleDto> yearlyArticleDtoList = postService.findAllMenuPost();
-
-        content.put("articleMenu", yearlyArticleDtoList);
-        return Article.builder().header(headerDto).contentProperties(content).build();
+        Article article = Article.builder().id(postId)
+                .post(null)
+                .imageLinks(null)
+                .contentProperties(null).build();
+        Map<String, Object> body = new HashMap<>();
+        body.put("article", article);
+        return PageDto.builder()
+                .head(null )
+                .topMenu(null)
+                .articleMenu(postService.findAllMenuPost())
+                .body(body)
+                .footer(null)
+                .build();
     }
 
     @Override
-    public SubjectDto getSubject(String subjectName) {
+    public PageDto getSubject(String subjectName) {
         return null;
     }
 
     @Override
-    public Object search(String typeToSearch, String keyWord) {
+    public PageDto search(String typeToSearch, String keyWord) {
         return null;
     }
 
     @Override
-    public Object fullTextSearch(String keyWord) {
+    public PageDto fullTextSearch(String keyWord) {
         return null;
     }
 
     @Override
-    public Object getHome() {
+    public PageDto getHome() {
         return null;
     }
 
     @Override
-    public Object getAnObject() {
+    public PageDto getAnObject() {
         return null;
     }
 }

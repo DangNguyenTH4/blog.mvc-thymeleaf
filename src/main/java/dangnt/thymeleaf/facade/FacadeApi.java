@@ -1,13 +1,14 @@
 package dangnt.thymeleaf.facade;
 
 import dangnt.thymeleaf.object.dto.Article;
+import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.SubjectDto;
 
 public interface FacadeApi {
-  Article getArticle(Long postId);
-  SubjectDto getSubject(String subjectName);
-  Object search(String typeToSearch, String keyWord);
-  Object fullTextSearch(String keyWord);
-  Object getHome();
-  Object getAnObject();
+  PageDto getArticle(Long postId);
+  PageDto getSubject(String subjectName);
+  PageDto search(String typeToSearch, String keyWord);
+  PageDto fullTextSearch(String keyWord);
+  PageDto getHome();
+  PageDto getAnObject();
 }

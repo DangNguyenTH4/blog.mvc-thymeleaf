@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${article.header.title}"></title>
+    <title th:text="${header == null ? 'dAngthIEnthAn' : header.title}"></title>
 </head>
 <body>
     <h1>Hello world! I'm Dang!</h1>
