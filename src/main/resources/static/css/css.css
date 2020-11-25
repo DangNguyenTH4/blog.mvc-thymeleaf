@@ -2,7 +2,8 @@
     margin-top: 40px;
     height: 60px;
     /* width: 100%; */
-    background-color: black;
+    background-color: #404040;
+    opacity: 0.5;
 }
 .header-top select{
     border: none;

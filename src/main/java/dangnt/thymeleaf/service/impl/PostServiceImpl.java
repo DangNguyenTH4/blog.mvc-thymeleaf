@@ -1,6 +1,6 @@
 package dangnt.thymeleaf.service.impl;
 
-import dangnt.thymeleaf.object.accessdata.PostDao;
+import dangnt.thymeleaf.object.mapper.PostEntityMapper;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.MonthlyArticleDto;
 import dangnt.thymeleaf.object.dto.PostDto;
@@ -11,7 +11,6 @@ import dangnt.thymeleaf.service.PostService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,6 +27,9 @@ import org.thymeleaf.util.DateUtils;
 public class PostServiceImpl implements PostService {
   @Autowired
   private PostRepository postRepository;
+
+  @Autowired
+  private PostEntityMapper postMapper;
 
   @Override
   public PostDto findPostById(Long postId) {
@@ -53,9 +55,10 @@ public class PostServiceImpl implements PostService {
       Map<Integer, MonthlyArticleDto> monthlyMap = yearlyArticleDtoMap.get(year);
       //add to map year not exist
       monthlyMap.putIfAbsent(month, new MonthlyArticleDto(String.valueOf(month), new ArrayList<>()));
-      Article article = Article.builder().id(postEntity.getId()).post(
-          PostDto.builder().title(postEntity.getTitle()).introduction(postEntity.getIntroduction())
-              .build()).build();
+      Article article = Article.builder()
+              .id(postEntity.getId())
+              .post(postMapper.toPostDto(postEntity))
+              .build();
       monthlyMap.get(month).getMonthlyArticles().add(article);
     }
     if(CollectionUtils.isEmpty(yearlyArticleDtoMap)){
