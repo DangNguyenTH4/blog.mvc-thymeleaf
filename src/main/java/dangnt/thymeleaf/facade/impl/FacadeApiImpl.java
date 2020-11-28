@@ -3,20 +3,23 @@ package dangnt.thymeleaf.facade.impl;
 import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.HeadDto;
-import dangnt.thymeleaf.object.dto.ImageLinkDto;
 import dangnt.thymeleaf.object.dto.MenuSubjectDto;
 import dangnt.thymeleaf.object.dto.MetaContentDto;
+import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PostDto;
-import dangnt.thymeleaf.object.dto.SubjectDto;
 import dangnt.thymeleaf.service.HeaderService;
 import dangnt.thymeleaf.service.ImageLinkService;
 import dangnt.thymeleaf.service.MetadataService;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 //@Service("FacadeApiImpl")
 public class FacadeApiImpl implements FacadeApi {
@@ -77,8 +80,36 @@ public class FacadeApiImpl implements FacadeApi {
 
 
     @Override
-    public PageDto getHome() {
-        return null;
+    public PageDto getHome(PageableAndSortDto pageableAndSortDto) {
+        //Build Head
+//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
+        HeadDto headDto = new HeadDto();
+        headDto.setTitle("Welcome to Dang's Blog!");
+        headDto.setMetaContents(null);
+        //Build Top Menu
+        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
+
+        //Build body
+        List<Article> articlesIntroduction = new ArrayList<>();
+        List<PostDto> listPostDto = postService.findAllPost(pageableAndSortDto);
+        Article article;
+        for(PostDto dto : listPostDto){
+            article = Article.builder()
+                .id(dto.getId())
+                .post(dto)
+                .contentProperties(null).build();
+            articlesIntroduction.add(article);
+        }
+        Map<String, Object> body = new HashMap<>();
+        body.put("articles", articlesIntroduction);
+        body.put("nextPage", pageableAndSortDto.getPageIndex()+1);
+        return PageDto.builder()
+            .head(headDto)
+            .topMenu(topMenu)
+            .articleMenu(postService.findAllMenuPost()) // Build left menu
+            .body(body)
+            .footer(null)
+            .build();
     }
 
     @Override

@@ -20,6 +20,14 @@ public interface PostEntityMapper {
             @Mapping(source = "relatedTag", target = "tags")})
     PostDto toPostDto(PostEntity postEntity);
 
+    @Mappings({
+//            @Mapping(source = "id", target = "id"),
+//            @Mapping(source = "title", target = "title"),
+            @Mapping(target = "content", ignore = true),
+//            @Mapping(source = "introduction", target = "introduction"),
+        @Mapping(source = "relatedTag", target = "tags")})
+    PostDto toIntroductionPostDto(PostEntity postEntity);
+
     default List<String> mapTags(String relatedTag){
         String[] tags = StringUtils.split(relatedTag, ",");
         if(tags != null){

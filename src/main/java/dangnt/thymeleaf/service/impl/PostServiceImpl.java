@@ -1,5 +1,6 @@
 package dangnt.thymeleaf.service.impl;
 
+import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.mapper.PostEntityMapper;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.MonthlyArticleDto;
@@ -25,6 +26,10 @@ import javax.swing.text.html.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.thymeleaf.context.Context;
@@ -101,5 +106,21 @@ public class PostServiceImpl implements PostService {
         yearlyArticleDtos.add(yearlyArticleDto);
     }
     return yearlyArticleDtos;
+  }
+
+  @Override
+  public List<PostDto> findAllPost(PageableAndSortDto pageableAndSortDto) {
+    Pageable pageable = PageRequest
+        .of(pageableAndSortDto.getPageIndex(), pageableAndSortDto.getPageSize(),
+            Sort.by("created").descending());
+    Page<PostEntity> page = postRepository.findAll(pageable);
+    List<PostEntity> listPostEntityList = page.getContent();
+    PostDto dto;
+    List<PostDto> result = new ArrayList<>();
+    for(PostEntity postEntity : listPostEntityList){
+       dto = postMapper.toIntroductionPostDto(postEntity);
+       result.add(dto);
+    }
+    return result;
   }
 }

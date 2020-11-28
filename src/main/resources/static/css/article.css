@@ -1,0 +1,21 @@
+.card-title{
+  color: #000000
+}
+
+.article-header {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.article-header img {vertical-align: middle;}
+
+.article-header .article-title {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}

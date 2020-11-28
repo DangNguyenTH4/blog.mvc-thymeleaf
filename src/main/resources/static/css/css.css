@@ -58,3 +58,6 @@
   .row{
     margin-right:0px;
   }
+.card-body{
+  cursor: pointer;
+}

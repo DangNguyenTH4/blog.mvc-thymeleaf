@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>DangNT's blog</title>
+  <title th:text="${header == null ? 'dAngthIEnthAn' : header.title}"></title>
   <!--  <link rel="stylesheet" href="./css.css">-->
   <!--  <link rel="stylesheet" href="./dropdown.css">-->
   <!-- CSS -->
@@ -21,6 +21,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{../css/dropdown.css}" >
   <link rel="stylesheet" type="text/css" th:href="@{../css/css.css}" >
+  <link rel="stylesheet" type="text/css" th:href="@{../css/article.css}" >
+  <link rel="stylesheet" type="text/css" th:href="@{../css/moreArticle.css}" >
   <link rel="stylesheet" type="text/css" th:href="@{../css/header.css}" >
 </head>
 
@@ -71,25 +73,30 @@
 <!--        <div th:utext="${article.post.content}">Here is in database</div>-->
         <div class="row">
           <div class="column">
-            <div class="card">
-              <img class="card-img-top"  src = "https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" th:src="${article.post.titleImage}" th:alt="${article.post.title}">
-              <div class="card-body">
-                <h5 class="card-title" th:text="${article.post.title}">Cách con người làm một việc là cách con người làm mọi việc</h5>
-                <p class="card-text" th:text="${article.post.introduction}">Sinh ra và lớn lên, mỗi người có những tiềm thức, có những trải
-                  nghiệm khác nhau. Hình thành nên cách làm việc là khác nhau.
-                  Những vấn đề thường ngày nhất là thứ thể hiện bản chất thật nhất của con người</p>
-              </div>
+            <div th:fragment="articleList" class="card" th:each="article : ${articles}">
+              <a th:href="@{/article/} + ${article.post.id}">
+                <img class="card-img-top"  src = "https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" th:src="${article.post.titleImage}" th:alt="${article.post.title}">
+              </a>
+                <div class="card-body">
+                  <a th:href="@{/article/} + ${article.post.id}">
+                    <h5 class="card-title" th:text="${article.post.title}">Cách con người làm một việc là cách con người làm mọi việc</h5>
+                  </a>
+                  <p class="card-text" th:text="${article.post.introduction}">Sinh ra và lớn lên, mỗi người có những tiềm thức, có những trải
+                    nghiệm khác nhau. Hình thành nên cách làm việc là khác nhau.
+                    Những vấn đề thường ngày nhất là thứ thể hiện bản chất thật nhất của con người</p>
+                  <a th:href="@{/article/} + ${article.post.id}"> Đọc tiếp... >>> </a>
+                </div>
+
+
               <div th:if="${article.post.tags} != null" class="card-footer text-muted">
                 <i class="material-icons">local_offer</i>:
                 <span th:each="tag: ${article.post.tags}"><a href="#"  th:text="${tag} + ' ' ">tag1, </a></span>
-<!--                <span><a href="#">tag6, </a></span>-->
-<!--                <span><a href="#">tag5, </a></span>-->
-<!--                <span><a href="#">tag4, </a></span>-->
-<!--                <span><a href="#">tag3, </a></span>-->
-<!--                <span><a href="#">tag2, </a></span>-->
               </div>
             </div>
-
+            <div id="moreArticle"></div>
+            <div id="getContinue">
+              <span >Thêm bài viết >>></span>
+            </div>
           </div>
         </div>
       </div>
@@ -123,6 +130,9 @@
 <!--  </div>-->
 <!--</section>-->
 <script th:src="@{../js/dropdown.js}">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{../js/moreArticle.js}">
 </script>
 </body>
 </html>

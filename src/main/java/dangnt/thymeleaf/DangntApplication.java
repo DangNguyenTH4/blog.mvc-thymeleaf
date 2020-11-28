@@ -20,15 +20,15 @@ public class DangntApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		PostEntity entity = new PostEntity();
-		entity.setContent("Hello me");
-		entity.setLanguage("Viet name");
-		entity.setTitle("Hello");
-//		entity.setId(1111L);
-		postRepository.save(entity);
-		Optional<PostEntity> e = postRepository.findById(10L);
-		entity = e.get();
-		entity.setTitle("Changed");
-		postRepository.save(entity);
+//		PostEntity entity = new PostEntity();
+//		entity.setContent("Hello me");
+//		entity.setLanguage("Viet name");
+//		entity.setTitle("Hello");
+////		entity.setId(1111L);
+//		postRepository.save(entity);
+//		Optional<PostEntity> e = postRepository.findById(10L);
+//		entity = e.get();
+//		entity.setTitle("Changed");
+//		postRepository.save(entity);
 	}
 }
