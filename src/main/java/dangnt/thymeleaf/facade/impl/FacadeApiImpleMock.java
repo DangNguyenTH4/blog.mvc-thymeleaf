@@ -43,6 +43,7 @@ public class FacadeApiImpleMock implements FacadeApi {
         List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
 
         PostDto post =  postService.findPostById(postId);
+
          Article article = Article.builder().id(postId)
                 .post(post)
                 .contentProperties(null).build();

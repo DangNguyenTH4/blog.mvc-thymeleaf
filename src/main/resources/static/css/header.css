@@ -20,3 +20,26 @@
     50%  {background-image:  url("https://i.ibb.co/7p0Cfsw/dragon3-rotate.gif"); left:90%; top:0px;}
     100% {left:0px; top:0px;}
   }
+
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+  margin-left:5px;
+}

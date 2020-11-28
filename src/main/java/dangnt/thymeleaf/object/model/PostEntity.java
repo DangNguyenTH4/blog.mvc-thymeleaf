@@ -25,6 +25,7 @@ public class PostEntity extends BaseEntity {
   private Long id;
 
   private String title;
+  private String titleImage;
 
   @Column(name = "content", columnDefinition="TEXT")
   private String content;

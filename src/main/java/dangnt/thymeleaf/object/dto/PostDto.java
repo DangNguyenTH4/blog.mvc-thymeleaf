@@ -1,5 +1,6 @@
 package dangnt.thymeleaf.object.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,5 +11,6 @@ public class PostDto {
     private String title;
     private String introduction;
     private String content;
-    private String tags;
+    private List<String> tags;
+    private String titleImage;
 }
