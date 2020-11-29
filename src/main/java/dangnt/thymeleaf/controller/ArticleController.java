@@ -3,6 +3,7 @@ package dangnt.thymeleaf.controller;
 import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
+import dangnt.thymeleaf.object.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class ArticleController {
 
         PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
         pageableAndSortDto.setSortBy("created");
-        pageableAndSortDto.setPageIndex(0);
+        pageableAndSortDto.setPageIndex(pageIndex == null ? 0 : pageIndex);
         pageableAndSortDto.setPageSize(10);
         PageDto pageDto = facadeApi.getArticleByTime(year, month, pageableAndSortDto);
         ControllerUtils.buildModelForPage(model, pageDto);

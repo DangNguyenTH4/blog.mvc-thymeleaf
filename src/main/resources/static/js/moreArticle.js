@@ -11,6 +11,8 @@ console.log(pageIndex);
 				},
 				error: function(){
 				  pageIndex--;
+				  console.log("Error");
+				  $('#getContinue').remove();
 				}
 			});
 			pageIndex++;

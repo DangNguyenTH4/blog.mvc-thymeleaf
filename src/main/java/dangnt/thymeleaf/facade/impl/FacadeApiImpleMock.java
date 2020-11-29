@@ -160,28 +160,10 @@ public class FacadeApiImpleMock implements FacadeApi {
         List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
         //Build body
         List<PostDto> postDtos = postService.findPostIntroByTime(year, month, pageableAndSortDto);
-
         Map<String, Object> body = new HashMap<>();
         List<Article> articles = postDtos.stream()
             .map(dto -> Article.builder().id(dto.getId()).post(dto).contentProperties(null).build())
             .collect(Collectors.toList());
-        if(year == null && month == null){
-            return getHome(pageableAndSortDto);
-        }
-        //Find by month
-        if(year == null){
-
-        }
-        //Find by year
-        else if(month == null){
-
-        }
-        //Find by month & year
-        else{
-
-
-        }
-
         body.put("articles", articles);
         return PageDto.builder()
             .head(headDto)

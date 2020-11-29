@@ -1,23 +1,21 @@
 package dangnt.thymeleaf.service.impl;
 
-import dangnt.thymeleaf.object.dto.PageableAndSortDto;
-import dangnt.thymeleaf.object.mapper.PostEntityMapper;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.MonthlyArticleDto;
+import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.dto.PostDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.exception.NotFoundException;
+import dangnt.thymeleaf.object.mapper.PostEntityMapper;
 import dangnt.thymeleaf.object.model.ImageLinkEntity;
 import dangnt.thymeleaf.object.model.PostEntity;
 import dangnt.thymeleaf.repository.ImageLinkRepository;
 import dangnt.thymeleaf.repository.PostRepository;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.templateutils.TemplateService;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -27,15 +25,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.swing.text.html.Option;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.CalendarUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.tomcat.util.file.Matcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -131,6 +123,9 @@ public class PostServiceImpl implements PostService {
        dto = postMapper.toIntroductionPostDto(postEntity);
        result.add(dto);
     }
+    if(CollectionUtils.isEmpty(result)){
+      throw new NotFoundException();
+    }
     return result;
   }
 
@@ -139,6 +134,9 @@ public class PostServiceImpl implements PostService {
     List<PostEntity> list = postRepository.findByIdIn(postIds);
     List<PostDto> dtos = list.stream().map(postMapper::toIntroductionPostDto)
         .collect(Collectors.toList());
+    if(CollectionUtils.isEmpty(dtos)){
+      throw new NotFoundException();
+    }
     return dtos;
   }
 
@@ -171,6 +169,9 @@ public class PostServiceImpl implements PostService {
     //Find by month (year null, month not null)
     else{
       result = postMapper.toListIntroductionPostDto(postRepository.findByMonthCreate(month, pageable));
+    }
+    if(CollectionUtils.isEmpty(result)){
+      throw new NotFoundException();
     }
     return result;
   }

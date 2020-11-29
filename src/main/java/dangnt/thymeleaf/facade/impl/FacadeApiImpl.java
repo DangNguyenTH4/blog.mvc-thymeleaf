@@ -156,6 +156,28 @@ public class FacadeApiImpl implements FacadeApi {
     @Override
     public PageDto getArticleByTime(Integer year, Integer month,
         PageableAndSortDto pageableAndSortDto) {
-        return null;
+        //Build Head
+//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
+        HeadDto headDto = new HeadDto();
+        headDto.setTitle("Search article by subject!");
+        headDto.setMetaContents(null);
+        //Build Top Menu
+        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
+        //Build left menu
+        List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
+        //Build body
+        List<PostDto> postDtos = postService.findPostIntroByTime(year, month, pageableAndSortDto);
+        Map<String, Object> body = new HashMap<>();
+        List<Article> articles = postDtos.stream()
+            .map(dto -> Article.builder().id(dto.getId()).post(dto).contentProperties(null).build())
+            .collect(Collectors.toList());
+        body.put("articles", articles);
+        return PageDto.builder()
+            .head(headDto)
+            .topMenu(topMenu)
+            .articleMenu(leftMenu) // Build left menu
+            .body(body)
+            .footer(null)
+            .build();
     }
 }
