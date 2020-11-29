@@ -10,9 +10,9 @@ import lombok.Setter;
 public class SubjectDto {
   private List<MetaContentDto> metaContents;
 
-  private String subjectName;
-  private String subjectId;
-  private List<Article> tenPostRecent;
+  private String name;
+  private Long id;
+  private List<Article> sortedPost;
   private List<Article> tentPostHottest;
 
   private Map<String, String> contentProperties;

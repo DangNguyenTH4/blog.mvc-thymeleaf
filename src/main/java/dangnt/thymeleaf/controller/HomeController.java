@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping({"/","", "/home"})
@@ -19,19 +20,22 @@ public class HomeController {
   @Autowired
   private FacadeApi facadeApi;
   @GetMapping
-  public String getHome(Model model){
+  public String getHome(Model model , @RequestParam(value = "pageIndex", required = false) Integer pageIndex){
     PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
-    pageableAndSortDto.setPageIndex(0);
+    pageableAndSortDto.setPageIndex(pageIndex == null ? 0 : pageIndex);
     pageableAndSortDto.setPageSize(10);
     PageDto pageDto = facadeApi.getHome(pageableAndSortDto);
     ControllerUtils.buildModelForPage(model, pageDto);
+    if(pageIndex != null){
+      return "home::articleList";
+    }
     return "home";
   }
 
-  @GetMapping("/{pageIndex}")
-  public String getHomePageble(Model model, @PathVariable(value = "pageIndex", required = true) int pageIndex){
+  @GetMapping("/page")
+  public String getHomePageble(Model model, @RequestParam(value = "pageIndex", required = false) Integer pageIndex){
     PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
-    pageableAndSortDto.setPageIndex(pageIndex);
+    pageableAndSortDto.setPageIndex(pageIndex == null ? 0 : pageIndex);
     pageableAndSortDto.setPageSize(10);
     PageDto pageDto = facadeApi.getHome(pageableAndSortDto);
     ControllerUtils.buildModelForPage(model, pageDto);

@@ -1,12 +1,16 @@
 package dangnt.thymeleaf.facade.impl;
 
 import dangnt.thymeleaf.facade.FacadeApi;
+import dangnt.thymeleaf.object.accessdata.SubjectDao;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.MenuSubjectDto;
-import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.dto.PageDto;
+import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.dto.PostDto;
+import dangnt.thymeleaf.object.dto.SubjectDto;
+import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
 import dangnt.thymeleaf.templateutils.TemplateService;
@@ -14,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +31,9 @@ public class FacadeApiImpleMock implements FacadeApi {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private SubjectEntityMapper subjectMapper;
 
     @Autowired
     private TemplateService templateService;
@@ -82,7 +90,7 @@ public class FacadeApiImpleMock implements FacadeApi {
 
         //Build body
         List<Article> articlesIntroduction = new ArrayList<>();
-        List<PostDto> listPostDto = postService.findAllPost(pageableAndSortDto);
+        List<PostDto> listPostDto = postService.findAllPostIntro(pageableAndSortDto);
         Article article;
         for(PostDto dto : listPostDto){
             article = Article.builder()
@@ -106,5 +114,81 @@ public class FacadeApiImpleMock implements FacadeApi {
     @Override
     public PageDto getAnObject() {
         return null;
+    }
+
+    @Override
+    public PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto) {
+        //Build Head
+//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
+        HeadDto headDto = new HeadDto();
+        headDto.setTitle("Search article by subject!");
+        headDto.setMetaContents(null);
+        //Build Top Menu
+        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
+        //Build left menu
+        List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
+
+        SubjectDao subjectDao = subjectService.getArticleBySubjectId(subjectId, pageableAndSortDto);
+        SubjectDto subjectDto = subjectMapper.toSubjectDto(subjectDao);
+
+        List<PostDto> postDtos = postService.findPostIntroByIdIn(subjectDao.getSortedPost());
+        List<Article> articles = postDtos.stream()
+            .map(dto -> Article.builder().id(dto.getId()).post(dto).build())
+            .collect(Collectors.toList());
+        Map<String, Object> body = new HashMap<>();
+        body.put("articles", articles);
+        return PageDto.builder()
+            .head(headDto)
+            .topMenu(topMenu)
+            .articleMenu(leftMenu) // Build left menu
+            .body(body)
+            .footer(null)
+            .build();
+    }
+
+    @Override
+    public PageDto getArticleByTime(Integer year, Integer month,
+        PageableAndSortDto pageableAndSortDto) {
+        //Build Head
+//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
+        HeadDto headDto = new HeadDto();
+        headDto.setTitle("Search article by subject!");
+        headDto.setMetaContents(null);
+        //Build Top Menu
+        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
+        //Build left menu
+        List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
+        //Build body
+        List<PostDto> postDtos = postService.findPostIntroByTime(year, month, pageableAndSortDto);
+
+        Map<String, Object> body = new HashMap<>();
+        List<Article> articles = postDtos.stream()
+            .map(dto -> Article.builder().id(dto.getId()).post(dto).contentProperties(null).build())
+            .collect(Collectors.toList());
+        if(year == null && month == null){
+            return getHome(pageableAndSortDto);
+        }
+        //Find by month
+        if(year == null){
+
+        }
+        //Find by year
+        else if(month == null){
+
+        }
+        //Find by month & year
+        else{
+
+
+        }
+
+        body.put("articles", articles);
+        return PageDto.builder()
+            .head(headDto)
+            .topMenu(topMenu)
+            .articleMenu(leftMenu) // Build left menu
+            .body(body)
+            .footer(null)
+            .build();
     }
 }

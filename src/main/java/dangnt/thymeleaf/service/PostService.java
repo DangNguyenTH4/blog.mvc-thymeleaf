@@ -9,5 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface PostService {
     PostDto findPostById(Long postId);
     List<YearlyArticleDto> findAllMenuPost();
-    List<PostDto> findAllPost(PageableAndSortDto pageableAndSortDto);
+    List<PostDto> findAllPostIntro(PageableAndSortDto pageableAndSortDto);
+    List<PostDto> findPostIntroByIdIn(List<Long> postIds);
+    List<PostDto> findPostIntroByTime(Integer year, Integer month, PageableAndSortDto pageableAndSortDto);
 }

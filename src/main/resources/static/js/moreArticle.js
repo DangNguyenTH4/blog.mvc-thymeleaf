@@ -1,15 +1,10 @@
-$(document).ready(function(){
 
-    $("#getContinue").click(function(){
-     getMoreArticle();
-    });
-  });
 var pageIndex = 1;
+var currentHref = location.href;
 function getMoreArticle(){
 console.log(pageIndex);
-			pageIndex++;
 			$.ajax({
-				url: 'home/'+pageIndex,
+				url: currentHref+'?pageIndex='+pageIndex,
 				dataType: 'html',
 				success: function(html) {
 					$('#moreArticle').append(html);
@@ -18,8 +13,8 @@ console.log(pageIndex);
 				  pageIndex--;
 				}
 			});
+			pageIndex++;
 }
-
 //	var win = $(window);
 //
 //	// Each time the user scrolls

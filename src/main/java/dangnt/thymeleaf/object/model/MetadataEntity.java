@@ -19,5 +19,6 @@ public class MetadataEntity extends BaseEntity {
   private String properties;
   private String content;
 
-  private Long postId;
+  private Long objectId; //PostId, SubjectId ...
+  private String type; //POST, SUBJECT
 }

@@ -10,4 +10,6 @@ public interface FacadeApi {
   PageDto fullTextSearch(String keyWord);
   PageDto getHome(PageableAndSortDto pagableAndSortDto);
   PageDto getAnObject();
+  PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto);
+  PageDto getArticleByTime(Integer year, Integer month, PageableAndSortDto pageableAndSortDto);
 }

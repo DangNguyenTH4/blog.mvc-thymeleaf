@@ -14,17 +14,18 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{../css/dropdown.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{../css/css.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{../css/article.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{../css/moreArticle.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{../css/header.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dropdown.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/css.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/moreArticle.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" >
+
 </head>
 <body>
 
 <div class="header-top row">
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Dang-thAn-thieN's bloG</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" th:href="@{/}">Dang-thAn-thieN's bloG</a>
         <div class="listdropdown col align-self-end">
             <div class="btn-group" >
                 <th:block  th:each="subject: ${topMenu}">
@@ -93,4 +94,8 @@
 
 <!--    <h1 th:each="article : ${articleMenu.get(0).yearlyArticles.get(0).monthlyArticles}" th:text="${article}"></h1>-->
 </body>
+<script th:src="@{/js/dropdown.js}">
+</script>
+<script th:src="@{/js/moreArticle.js}">
+</script>
 </html>

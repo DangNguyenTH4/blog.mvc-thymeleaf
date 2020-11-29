@@ -12,7 +12,12 @@ import dangnt.thymeleaf.repository.ImageLinkRepository;
 import dangnt.thymeleaf.repository.PostRepository;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.templateutils.TemplateService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +29,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.swing.text.html.Option;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.CalendarUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.tomcat.util.file.Matcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -109,7 +119,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public List<PostDto> findAllPost(PageableAndSortDto pageableAndSortDto) {
+  public List<PostDto> findAllPostIntro(PageableAndSortDto pageableAndSortDto) {
     Pageable pageable = PageRequest
         .of(pageableAndSortDto.getPageIndex(), pageableAndSortDto.getPageSize(),
             Sort.by("created").descending());
@@ -120,6 +130,47 @@ public class PostServiceImpl implements PostService {
     for(PostEntity postEntity : listPostEntityList){
        dto = postMapper.toIntroductionPostDto(postEntity);
        result.add(dto);
+    }
+    return result;
+  }
+
+  @Override
+  public List<PostDto> findPostIntroByIdIn(List<Long> postIds) {
+    List<PostEntity> list = postRepository.findByIdIn(postIds);
+    List<PostDto> dtos = list.stream().map(postMapper::toIntroductionPostDto)
+        .collect(Collectors.toList());
+    return dtos;
+  }
+
+  @Override
+  public List<PostDto> findPostIntroByTime(Integer year, Integer month,
+      PageableAndSortDto pageableAndSortDto) {
+    if(year == null && month == null){
+      return findAllPostIntro(pageableAndSortDto);
+    }
+    Pageable pageable = PageRequest
+        .of(pageableAndSortDto.getPageIndex(), pageableAndSortDto.getPageSize(),
+            Sort.by(pageableAndSortDto.getSortBy()).descending());
+    List<PostDto> result = null;
+    Date toDate;
+    Date fromDate;
+    //Find by month and year
+    if(year != null && month != null){
+      LocalDateTime localDateTime = LocalDateTime.of(year, month, 1, 0, 0, 0, 0);
+      fromDate = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
+      toDate = Date.from(localDateTime.plusMonths(1).minusDays(1L).toInstant(ZoneOffset.UTC));
+      result = postMapper.toListIntroductionPostDto(postRepository.findByCreatedBetween(fromDate, toDate, pageable));
+    }
+    //Find by year (month null, yearn not null)
+    else if(month == null){
+      LocalDateTime localDateTime = LocalDateTime.of(year, 1, 1, 0, 0, 0, 0);
+      fromDate = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
+      toDate = Date.from(localDateTime.plusYears(1).minusDays(11L).toInstant(ZoneOffset.UTC));
+      result = postMapper.toListIntroductionPostDto(postRepository.findByCreatedBetween(fromDate, toDate, pageable));
+    }
+    //Find by month (year null, month not null)
+    else{
+      result = postMapper.toListIntroductionPostDto(postRepository.findByMonthCreate(month, pageable));
     }
     return result;
   }
