@@ -9,13 +9,18 @@ import dangnt.thymeleaf.service.SubjectService;
 import java.util.List;
 import java.util.Map;
 
-public abstract  class FacadeApiStrategy<T> {
+public abstract  class FacadeApiStrategy<T> implements FacadeStrategy<T>{
 
-  private PostService postService;
-  private SubjectService subjectService;
+  protected PostService postService;
+  protected SubjectService subjectService;
 
-  public abstract HeadDto getHead(T object);
-  public abstract Map<String, Object> getBody(T object);
+  public FacadeApiStrategy(PostService postService, SubjectService subjectService){
+    this.postService = postService;
+    this.subjectService = subjectService;
+  }
+
+  protected abstract HeadDto getHead(T object);
+  protected abstract Map<String, Object> getBody(T object);
 
   public final PageDto getPage(T object){
     return PageDto.builder()
@@ -26,15 +31,16 @@ public abstract  class FacadeApiStrategy<T> {
         .footer(this.getFoot())
         .build();
   }
-  public final List<MenuSubjectDto> getTopMenu(){
+
+  protected final List<MenuSubjectDto> getTopMenu(){
     return subjectService.getSubjectMenu();
   }
 
-  public final List<YearlyArticleDto> getLeftMenu(){
+  protected final List<YearlyArticleDto> getLeftMenu(){
     return postService.findAllMenuPost();
   }
 
-  public final Object getFoot(){
+  protected final Object getFoot(){
     return null;
   }
 }

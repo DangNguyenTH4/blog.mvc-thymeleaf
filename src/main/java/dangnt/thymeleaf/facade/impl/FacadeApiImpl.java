@@ -23,21 +23,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 //@Service("FacadeApiImpl")
 public class FacadeApiImpl implements FacadeApi {
-//    @Autowired
+    @Autowired
     private HeaderService headerService;
-//    @Autowired
+    @Autowired
     private ImageLinkService imageLinkService;
-//    @Autowired
+    @Autowired
     private MetadataService metadataService;
-//    @Autowired
+    @Autowired
     private PostService postService;
-//    @Autowired
+    @Autowired
     private SubjectService subjectService;
 
-//    @Autowired
+    @Autowired
     private SubjectEntityMapper subjectMapper;
 
     @Override

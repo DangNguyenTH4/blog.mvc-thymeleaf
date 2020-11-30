@@ -4,6 +4,7 @@ import dangnt.thymeleaf.object.model.FriendEntity;
 import dangnt.thymeleaf.service.FriendService;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/friends")
+@Slf4j
 public class UserController {
   @Autowired private FriendService userService;
 
@@ -31,6 +33,16 @@ public class UserController {
     return "friendlist";
   }
 
+  @RequestMapping(value = "test")
+  public String test(Model model) throws InterruptedException {
+    log.info("TESTTTTTTTTTTTTTTTTT");
+    System.out.println("Tesst2");
+    Thread.sleep(3000);
+    log.info("Done");
+
+    model.addAttribute("user", new FriendEntity());
+    return "addUser";
+  }
   @RequestMapping(value = "add")
   public String addUser(Model model) {
     model.addAttribute("user", new FriendEntity());

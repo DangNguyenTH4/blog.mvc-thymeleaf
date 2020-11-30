@@ -1,23 +1,15 @@
 package dangnt.thymeleaf.facade.impl;
 
 import dangnt.thymeleaf.facade.FacadeApi;
-import dangnt.thymeleaf.object.accessdata.SubjectDao;
-import dangnt.thymeleaf.object.dto.Article;
-import dangnt.thymeleaf.object.dto.HeadDto;
-import dangnt.thymeleaf.object.dto.MenuSubjectDto;
+import dangnt.thymeleaf.facade.strategy.FacadeStrategy;
+import dangnt.thymeleaf.facade.strategy.factory.FacadeFunctionFactoryImpl;
+import dangnt.thymeleaf.facade.strategy.form.SubjectArticleForm;
+import dangnt.thymeleaf.facade.strategy.form.TimeArticleForm;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
-import dangnt.thymeleaf.object.dto.PostDto;
-import dangnt.thymeleaf.object.dto.SubjectDto;
-import dangnt.thymeleaf.object.dto.YearlyArticleDto;
 import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,30 +26,14 @@ public class FacadeApiImpleMock implements FacadeApi {
     @Autowired
     private SubjectEntityMapper subjectMapper;
 
+    @Autowired
+    private FacadeFunctionFactoryImpl facadeFunctionFactory;
+
     @Override
-//    @Cacheable(value = "articleMenu")
     public PageDto getArticle(Long postId) {
-        log.info("POST id: {}", postId);
-        HeadDto headerDto = new HeadDto();
-        headerDto.setTitle("Mock article title!");
-
-        //Build top menu
-        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
-
-        PostDto post =  postService.findPostById(postId);
-
-         Article article = Article.builder().id(postId)
-                .post(post)
-                .contentProperties(null).build();
-        Map<String, Object> body = new HashMap<>();
-        body.put("article", article);
-        return PageDto.builder()
-                .head(null )
-                .topMenu(topMenu)
-                .articleMenu(postService.findAllMenuPost())
-                .body(body)
-                .footer(null)
-                .build();
+        FacadeStrategy<Long> facadeApiStrategy = facadeFunctionFactory
+            .get(FacadeFunctionFactoryImpl.GETARTICLEBYID);
+        return facadeApiStrategy.getPage(postId);
     }
 
     @Override
@@ -77,35 +53,9 @@ public class FacadeApiImpleMock implements FacadeApi {
 
     @Override
     public PageDto getHome(PageableAndSortDto pageableAndSortDto) {
-        //Build Head
-//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
-        HeadDto headDto = new HeadDto();
-        headDto.setTitle("Welcome to Dang's Blog!");
-        headDto.setMetaContents(null);
-        //Build Top Menu
-        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
-
-        //Build body
-        List<Article> articlesIntroduction = new ArrayList<>();
-        List<PostDto> listPostDto = postService.findAllPostIntro(pageableAndSortDto);
-        Article article;
-        for(PostDto dto : listPostDto){
-            article = Article.builder()
-                .id(dto.getId())
-                .post(dto)
-                .contentProperties(null).build();
-            articlesIntroduction.add(article);
-        }
-        Map<String, Object> body = new HashMap<>();
-        body.put("articles", articlesIntroduction);
-        body.put("nextPage", pageableAndSortDto.getPageIndex()+1);
-        return PageDto.builder()
-            .head(headDto)
-            .topMenu(topMenu)
-            .articleMenu(postService.findAllMenuPost()) // Build left menu
-            .body(body)
-            .footer(null)
-            .build();
+        FacadeStrategy<PageableAndSortDto> facadeApiStrategy = facadeFunctionFactory
+            .get(FacadeFunctionFactoryImpl.GETHOME);
+        return facadeApiStrategy.getPage(pageableAndSortDto);
     }
 
     @Override
@@ -115,59 +65,17 @@ public class FacadeApiImpleMock implements FacadeApi {
 
     @Override
     public PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto) {
-        //Build Head
-//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
-        HeadDto headDto = new HeadDto();
-        headDto.setTitle("Search article by subject!");
-        headDto.setMetaContents(null);
-        //Build Top Menu
-        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
-        //Build left menu
-        List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
+        FacadeStrategy<SubjectArticleForm> formFacadeApiStrategy = facadeFunctionFactory
+            .get(FacadeFunctionFactoryImpl.GET_ARTICLE_BY_SUBJECT_ID);
+        return formFacadeApiStrategy.getPage(new SubjectArticleForm(subjectId, pageableAndSortDto));
 
-        SubjectDao subjectDao = subjectService.getArticleBySubjectId(subjectId, pageableAndSortDto);
-        SubjectDto subjectDto = subjectMapper.toSubjectDto(subjectDao);
-
-        List<PostDto> postDtos = postService.findPostIntroByIdIn(subjectDao.getSortedPost());
-        List<Article> articles = postDtos.stream()
-            .map(dto -> Article.builder().id(dto.getId()).post(dto).build())
-            .collect(Collectors.toList());
-        Map<String, Object> body = new HashMap<>();
-        body.put("articles", articles);
-        return PageDto.builder()
-            .head(headDto)
-            .topMenu(topMenu)
-            .articleMenu(leftMenu) // Build left menu
-            .body(body)
-            .footer(null)
-            .build();
     }
 
     @Override
     public PageDto getArticleByTime(Integer year, Integer month,
         PageableAndSortDto pageableAndSortDto) {
-        //Build Head
-//        List<MetaContentDto> metadataEntities = metadataService.findByPostId(postId);
-        HeadDto headDto = new HeadDto();
-        headDto.setTitle("Search article by subject!");
-        headDto.setMetaContents(null);
-        //Build Top Menu
-        List<MenuSubjectDto> topMenu = subjectService.getSubjectMenu();
-        //Build left menu
-        List<YearlyArticleDto> leftMenu = postService.findAllMenuPost();
-        //Build body
-        List<PostDto> postDtos = postService.findPostIntroByTime(year, month, pageableAndSortDto);
-        Map<String, Object> body = new HashMap<>();
-        List<Article> articles = postDtos.stream()
-            .map(dto -> Article.builder().id(dto.getId()).post(dto).contentProperties(null).build())
-            .collect(Collectors.toList());
-        body.put("articles", articles);
-        return PageDto.builder()
-            .head(headDto)
-            .topMenu(topMenu)
-            .articleMenu(leftMenu) // Build left menu
-            .body(body)
-            .footer(null)
-            .build();
+        FacadeStrategy<TimeArticleForm> formFacadeApiStrategy = facadeFunctionFactory
+            .get(FacadeFunctionFactoryImpl.GET_ARTICLE_BY_TIME);
+        return formFacadeApiStrategy.getPage(new TimeArticleForm(year, month, pageableAndSortDto));
     }
 }
