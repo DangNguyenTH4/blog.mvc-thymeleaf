@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 public class TemplatePool {
     private static TemplatePool instance = new TemplatePool();
     private int poolSize = 10;
+    private int maxPoolSize = 100;
+    private int currentPoolSize = 10;
     private final Set<TemplateService> available = new HashSet<>();
     private final Set<TemplateService> inUse = new HashSet<>();
 
@@ -29,6 +31,7 @@ public class TemplatePool {
         //Wait for another thread return.
         log.info("Available size: {}", available.size());
         while(available.isEmpty()){
+//            this.addMorePoolSize();
             log.info("Available is empty. Wait!");
         }
 
@@ -56,5 +59,14 @@ public class TemplatePool {
 
     private TemplateService create(){
         return new ThymeleafStringTemplateService();
+    }
+    private synchronized void addMorePoolSize(){
+        if(currentPoolSize < maxPoolSize){
+            synchronized (available){
+                for(int i=0;i<poolSize;i++) {
+                    available.add(create());
+                }
+            }
+        }
     }
 }
