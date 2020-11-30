@@ -19,6 +19,7 @@
     padding-top: 200px;
     position: fixed;
     z-index: 2;
+    margin-top:100px;
 }
 #content{
     /* float: left; */
