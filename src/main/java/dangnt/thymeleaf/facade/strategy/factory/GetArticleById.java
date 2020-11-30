@@ -4,8 +4,10 @@ import dangnt.thymeleaf.facade.strategy.FacadeApiStrategy;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.PostDto;
+import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ class GetArticleById extends FacadeApiStrategy<Long> {
   }
 
   @Override
-  public Map<String, Object> getBody(Long postId) {
+  protected Map<String, Object> getBody(Long postId) {
     PostDto postEntity = postService.findPostById(postId);
     Article article = Article.builder().id(postId)
         .post(postEntity)
@@ -47,5 +49,10 @@ class GetArticleById extends FacadeApiStrategy<Long> {
     Map<String, Object> body = new HashMap<>();
     body.put("article", article);
     return body;
+  }
+
+  @Override
+  public void checkCorrectType(Type t) throws WrongTypeException {
+    if (!Long.class.equals(t)) throw new WrongTypeException("Type input must be Long!");
   }
 }

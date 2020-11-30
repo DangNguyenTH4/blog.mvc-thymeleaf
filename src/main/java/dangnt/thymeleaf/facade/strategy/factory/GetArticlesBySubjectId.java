@@ -2,14 +2,17 @@ package dangnt.thymeleaf.facade.strategy.factory;
 
 import dangnt.thymeleaf.facade.strategy.FacadeApiStrategy;
 import dangnt.thymeleaf.facade.strategy.form.SubjectArticleForm;
+import dangnt.thymeleaf.facade.strategy.form.TimeArticleForm;
 import dangnt.thymeleaf.object.accessdata.SubjectDao;
 import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.PostDto;
 import dangnt.thymeleaf.object.dto.SubjectDto;
+import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,5 +53,10 @@ class GetArticlesBySubjectId extends FacadeApiStrategy<SubjectArticleForm> {
     Map<String, Object> body = new HashMap<>();
     body.put("articles", articles);
     return body;
+  }
+
+  @Override
+  public void checkCorrectType(Type t) throws WrongTypeException {
+    if (!SubjectArticleForm.class.equals(t)) throw new WrongTypeException("Type input must be TimeArticleForm!");
   }
 }

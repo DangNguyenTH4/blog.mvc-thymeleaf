@@ -4,8 +4,10 @@ import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.MenuSubjectDto;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +23,10 @@ public abstract  class FacadeApiStrategy<T> implements FacadeStrategy<T>{
 
   protected abstract HeadDto getHead(T object);
   protected abstract Map<String, Object> getBody(T object);
+  protected abstract void checkCorrectType(Type type) throws WrongTypeException;
 
-  public final PageDto getPage(T object){
+  public final PageDto getPage(T object) throws WrongTypeException {
+    this.checkCorrectType(object.getClass());
     return PageDto.builder()
         .head(this.getHead(object))
         .topMenu(this.getTopMenu())

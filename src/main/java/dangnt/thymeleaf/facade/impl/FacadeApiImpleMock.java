@@ -7,6 +7,7 @@ import dangnt.thymeleaf.facade.strategy.form.SubjectArticleForm;
 import dangnt.thymeleaf.facade.strategy.form.TimeArticleForm;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
+import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
@@ -32,8 +33,13 @@ public class FacadeApiImpleMock implements FacadeApi {
     @Override
     public PageDto getArticle(Long postId) {
         FacadeStrategy<Long> facadeApiStrategy = facadeFunctionFactory
-            .get(FacadeFunctionFactoryImpl.GETARTICLEBYID);
-        return facadeApiStrategy.getPage(postId);
+            .get(FacadeFunctionFactoryImpl.GET_ARTICLE_BY_ID);
+        try {
+            return facadeApiStrategy.getPage(postId);
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -54,8 +60,13 @@ public class FacadeApiImpleMock implements FacadeApi {
     @Override
     public PageDto getHome(PageableAndSortDto pageableAndSortDto) {
         FacadeStrategy<PageableAndSortDto> facadeApiStrategy = facadeFunctionFactory
-            .get(FacadeFunctionFactoryImpl.GETHOME);
-        return facadeApiStrategy.getPage(pageableAndSortDto);
+            .get(FacadeFunctionFactoryImpl.GET_HOME);
+        try {
+            return facadeApiStrategy.getPage(pageableAndSortDto);
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -67,7 +78,12 @@ public class FacadeApiImpleMock implements FacadeApi {
     public PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto) {
         FacadeStrategy<SubjectArticleForm> formFacadeApiStrategy = facadeFunctionFactory
             .get(FacadeFunctionFactoryImpl.GET_ARTICLE_BY_SUBJECT_ID);
-        return formFacadeApiStrategy.getPage(new SubjectArticleForm(subjectId, pageableAndSortDto));
+        try {
+            return formFacadeApiStrategy.getPage(new SubjectArticleForm(subjectId, pageableAndSortDto));
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 
@@ -76,6 +92,11 @@ public class FacadeApiImpleMock implements FacadeApi {
         PageableAndSortDto pageableAndSortDto) {
         FacadeStrategy<TimeArticleForm> formFacadeApiStrategy = facadeFunctionFactory
             .get(FacadeFunctionFactoryImpl.GET_ARTICLE_BY_TIME);
-        return formFacadeApiStrategy.getPage(new TimeArticleForm(year, month, pageableAndSortDto));
+        try {
+            return formFacadeApiStrategy.getPage(new TimeArticleForm(year, month, pageableAndSortDto));
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
