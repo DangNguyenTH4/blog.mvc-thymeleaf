@@ -7,7 +7,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
-@Component(value = "ThymeleafStringTemplateService")
+//@Component(value = "ThymeleafStringTemplateService")
 public class ThymeleafStringTemplateService extends ThymeleafTemplate {
   private TemplateEngine templateEngine;
   public ThymeleafStringTemplateService(){

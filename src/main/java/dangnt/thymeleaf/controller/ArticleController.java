@@ -18,9 +18,11 @@ public class ArticleController {
     @Autowired
     private FacadeApi facadeApi;
     @GetMapping("/{postId}")
-    public String getAnArticle(Model model, @PathVariable("postId") Long postId){
+    public String getAnArticle(Model model, @PathVariable("postId") Long postId) throws InterruptedException {
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
+//        System.out.println("SLEEP HERE!");
+//        Thread.sleep(3000);
         return "anArticle";
     }
 

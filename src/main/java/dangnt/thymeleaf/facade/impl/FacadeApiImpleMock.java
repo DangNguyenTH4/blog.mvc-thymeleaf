@@ -13,7 +13,6 @@ import dangnt.thymeleaf.object.dto.YearlyArticleDto;
 import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
-import dangnt.thymeleaf.templateutils.TemplateService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +34,10 @@ public class FacadeApiImpleMock implements FacadeApi {
     @Autowired
     private SubjectEntityMapper subjectMapper;
 
-    @Autowired
-    private TemplateService templateService;
     @Override
 //    @Cacheable(value = "articleMenu")
     public PageDto getArticle(Long postId) {
-        log.info("Get Articleeeee");
+        log.info("POST id: {}", postId);
         HeadDto headerDto = new HeadDto();
         headerDto.setTitle("Mock article title!");
 

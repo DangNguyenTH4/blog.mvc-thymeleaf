@@ -40,7 +40,7 @@ public class SubjectServiceImpl implements SubjectService {
   @Cacheable("topMenu")
   @Override
   public List<MenuSubjectDto> getSubjectMenu() {
-
+    log.info("Get subject menu!");
     List<SubjectEntity> subjectEntities = subjectRepository.findAllSortedByIndex();
     Map<Long, MenuSubjectDto> temp = subjectEntities.stream().map(subjectEntityMapper::toMenuSubject
 //        entity -> {

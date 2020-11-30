@@ -15,6 +15,7 @@ import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.templateutils.TemplateService;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import dangnt.thymeleaf.templateutils.TemplateServiceStrategy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -50,14 +51,15 @@ public class PostServiceImpl implements PostService {
   private PostEntityMapper postMapper;
 
   @Autowired
-  private TemplateService templateService;
+  private TemplateServiceStrategy templateStrategy;
 
 
   @Override
   public PostDto findPostById(Long postId) {
+    log.info("Get post: postID-1 :{}", postId);
     Optional<PostEntity> entityOptional = postRepository.findById(postId);
     PostDto postDto = null;
-
+    log.info("Get post: postID-2 :{}", postId);
     if(entityOptional.isPresent()){
       postDto = postMapper.toPostDto(entityOptional.get());
       //Fill imageLink into content!
@@ -66,7 +68,7 @@ public class PostServiceImpl implements PostService {
           .collect(Collectors.toMap(ImageLinkEntity::getName, Function.identity()));
       Context context = new Context();
       context.setVariable("imageLinks", mapImageLinks);
-      postDto.setContent(templateService.merge(postDto.getContent(), context));
+      postDto.setContent(templateStrategy.merge(postDto.getContent(), context));
     }
     return postDto;
 
@@ -75,6 +77,7 @@ public class PostServiceImpl implements PostService {
   @Override
   @Cacheable(value = "articleMenu")
   public List<YearlyArticleDto> findAllMenuPost() {
+    log.info("Get left menu!");
     List<YearlyArticleDto> yearlyArticleDtos = new ArrayList<>();
     //map monthly article. Decsending sort.
     Map<Integer, Map<Integer, MonthlyArticleDto>> yearlyArticleDtoMap = new TreeMap<>(Collections.reverseOrder());

@@ -1,7 +1,6 @@
 package dangnt.thymeleaf.controller;
 
 import dangnt.thymeleaf.facade.FacadeApi;
-import dangnt.thymeleaf.object.dto.Article;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import java.util.ArrayList;
