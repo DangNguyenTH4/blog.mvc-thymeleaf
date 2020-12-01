@@ -6,4 +6,5 @@ RUN apk add --no-cache bash
 COPY target/dangnt-0.0.1-SNAPSHOT.jar /app.jar
 #COPY run.sh /run.sh
 #COPY run.bat /run.bat
-ENTRYPOINT ["/usr/bin/java","-DurlDataSource=jdbc:postgresql://host.docker.internal:5432/thymeleaf", "-jar","/app.jar"]
+#ENTRYPOINT ["/usr/bin/java","-DurlDataSource=jdbc:postgresql://host.docker.internal:5432/thymeleaf", "-jar","/app.jar"]
+ENTRYPOINT ["/usr/bin/java", "-jar","/app.jar"]
