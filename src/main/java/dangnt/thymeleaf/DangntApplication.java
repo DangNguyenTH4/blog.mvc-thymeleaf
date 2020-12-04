@@ -13,46 +13,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class DangntApplication implements CommandLineRunner {
-	@Autowired
-	private PostRepository postRepository;
-	@Autowired
-	private SubjectRepository subjectRepository;
-	@Autowired
-	private SubjectPostRepository subjectPostRepository;
-//	@Autowired
-//	private FacadeApiFactory facadeApiFactory;
 	public static void main(String[] args) {
 		SpringApplication.run(DangntApplication.class, args);
 	}
 
-	@Value("${domainName}")
-	private String domainName;
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(domainName);
 
-//		facadeApiFactory.test();
-//		PostEntity entity = new PostEntity();
-//		entity.setContent("Hello me");
-//		entity.setLanguage("Viet name");
-//		entity.setTitle("Hello");
-////		entity.setSubjectPost(Arrays.asList(new SubjectPostEntity()));
-//
-//		postRepository.save(entity);
-//
-//		List<SubjectEntity> list = subjectRepository.findAll();
-//
-//		SubjectEntity subjectEntity = new SubjectEntity();
-////		subjectEntity.setArticles(Collections.singletonList(entity));
-//		subjectEntity.setName("TEST");
-//		subjectRepository.save(subjectEntity);
-//
-//		SubjectPostEntity subjectPostEntity = new SubjectPostEntity(
-//				new SubjectPostKey(subjectEntity.getId(), entity.getId()), subjectEntity, entity);
-////		SubjectPostEntity subjectPostEntity = new SubjectPostEntity(
-////				new SubjectPostKey(subjectEntity.getId(), entity.getId()));
-//		subjectPostRepository.save(subjectPostEntity);
-//		return;
+
 	}
 
 }
