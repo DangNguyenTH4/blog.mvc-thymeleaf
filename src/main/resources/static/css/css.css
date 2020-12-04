@@ -30,6 +30,8 @@
     background-color: whitesmoke;
     padding-top: 5px;
     padding-left: px;
+    font-size: 1.5rem;
+    text-align: justify;
 }
 #ads{
     /* height: 100px; */
@@ -61,4 +63,7 @@
   }
 .card-body{
   cursor: pointer;
+}
+.imgContent{
+  width:100%;
 }

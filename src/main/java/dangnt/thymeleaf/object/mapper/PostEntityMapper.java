@@ -26,6 +26,7 @@ public interface PostEntityMapper {
 //            @Mapping(source = "title", target = "title"),
             @Mapping(target = "content", ignore = true),
 //            @Mapping(source = "introduction", target = "introduction"),
+        @Mapping(source = "createdBy", target = "createdBy"),
         @Mapping(source = "relatedTag", target = "tags")})
     PostDto toIntroductionPostDto(PostEntity postEntity);
 

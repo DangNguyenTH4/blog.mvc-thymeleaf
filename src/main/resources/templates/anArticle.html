@@ -67,14 +67,14 @@
 <div class="page row">
     <div class="container-fluid float-left offset-2">
         <div class="row">
-            <div id="content" class="col-md-8 ">
+            <div id="content" class="col-md-7 ">
 
                 <div class="article-header">
                     <img th:src="${article.post.titleImage}" alt="Title" style="width:100%;">
                     <div class="article-title">
                         <h1 th:text="${article.post.title}">Heading</h1>
                         <i class="material-icons">alarm</i><time th:datetime="${article.post.created}"  th:text="${#dates.format(article.post.created, 'dd-MM-yyyy HH:mm')}"></time>
-                        <i class="material-icons">face</i><span>Nguyễn Thế Đăng</span>
+                        <i class="material-icons" >face</i><span th:text="${article.post.createdBy}">Nguyễn Thế Đăng</span>
 <!--                        <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei.</p>-->
                     </div>
                 </div>

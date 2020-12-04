@@ -12,6 +12,7 @@ public class PostDto {
     private String title;
     private String introduction;
     private Date created;
+    private String createdBy;
     private String content;
     private List<String> tags;
     private String titleImage;
