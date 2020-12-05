@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--main-fragment (title, otherStaticResources, metaData, header, topmenu, leftmenu, mainContent, footer)-->
 <html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 
 <head>
@@ -28,49 +29,14 @@
 
 <body>
 <!--MenuTop-->
-<div class="header-top row">
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" th:href="@{/}">Dang-thAn-thieN's bloG</a>
-    <div class="listdropdown col align-self-end">
-      <div class="btn-group" >
-        <th:block  th:each="subject: ${topMenu}">
-          <div type="button" class="dropdown btn btn-dark"  >
-            <span th:text="${subject.name}"> Apple</span>
-            <div class="dropdown-content" >
-              <th:block  th:each="subSubject : ${subject.subSubject}">
-                <a href="#" th:href="@{/article/subject/} + ${subSubject.id}" th:text="${subSubject.name}">SubjectName</a>
-              </th:block>
-            </div>
-          </div>
-        </th:block>
-      </div>
-    </div>
-    <form class="form-inline" action="/fullTextSearch.php">
-      <input class="form-control mr-sm-2" type="text" placeholder="Tìm kiếm">
-      <button class="btn btn-dark" type="submit">Tìm kiếm</button>
-    </form>
-  </nav>
-</div>
+<div th:replace="/layout/topmenu :: topmenu"> </div>
 <!--End MenuTop-->
 <!--Left Menu-->
-<div id="menu" class="col-md-1" >
-  <div  th:each="yearly : ${articleMenu}">
-    <button class="dropdown-btn-menu" th:text="${yearly.year}">2021
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-container" >
-      <a href="#" th:href="@{/article/} + ${yearly.year} + '/' + ${monthly.month}" th:each="monthly : ${yearly.yearlyArticles}" th:text="'Tháng ' + ${monthly.month}">Tháng 9</a>
-    </div>
-  </div>
-</div>
+<div th:replace="/layout/leftmenu :: leftmenu"> </div>
 <!--End Left Menu-->
 
 <!--Dragon Fly-->
-<section>
-  <div id="header" class="row">
-    <div></div>
-  </div>
-</section>
+<div th:replace="/layout/header :: header"> </div>
 <!--End Dragon Fly-->
 
 
@@ -121,7 +87,6 @@
 </script>
 <script>
   $(document).ready(function(){
-
     $("#getContinue").click(function(){
      getMoreArticle();
     });
