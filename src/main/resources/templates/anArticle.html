@@ -1,62 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb" th:replace="~{layout/main-layout :: main-fragment(
+                                                ~{::title},
+                                                ~{:: #article-static-resources},
+                                                ~{:: #article-meta-data},
+                                                ~{:: #article-header},
+                                                ~{:: #article-topmenu},
+                                                ~{:: #article-leftmenu},
+                                                ~{:: #article-main-content},
+                                                ~{:: #article-footer}
+                                               )}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${head == null ? 'dAngthIEnthAn' : head.title}"></title>
-
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/dropdown.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{/css/css.css}" >
     <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{/css/moreArticle.css}" >
-    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" >
 
+
+    <th:block id="article-static-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/moreArticle.css}">
+
+    </th:block>
 </head>
 <body>
-<!--MenuTop-->
-<div th:replace="/layout/topmenu :: topmenu"> </div>
-<!--End MenuTop-->
-<!--Left Menu-->
-<div th:replace="/layout/leftmenu :: leftmenu"> </div>
-<!--End Left Menu-->
 
-<!--Dragon Fly-->
-<div th:replace="/layout/header :: header"> </div>
-<!--End Dragon Fly-->
-
-<div class="page row">
-    <div class="container-fluid float-left offset-2">
-        <div class="row">
-            <div id="content" class="col-md-7 ">
-
-                <div class="article-header">
-                    <img th:src="${article.post.titleImage}" alt="Title" style="width:100%;">
-                    <div class="article-title">
-                        <h1 th:text="${article.post.title}">Heading</h1>
-                        <i class="material-icons">alarm</i><time th:datetime="${article.post.created}"  th:text="${#dates.format(article.post.created, 'dd-MM-yyyy HH:mm')}"></time>
-                        <i class="material-icons" >face</i><span th:text="${article.post.createdBy}">Nguyễn Thế Đăng</span>
-<!--                        <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei.</p>-->
-                    </div>
-                </div>
-
-<!--                <img th:src="${article.post.titleImage}" style="width:100%">-->
-                <div th:utext="${article.post.content}">Here is in database</div>
-            </div>
-            <div id="ads" class="col-md-4"></div>
+<div id="article-main-content">
+    <div class="article-header">
+        <img th:src="${article.post.titleImage}" alt="Title" style="width:100%;">
+        <div class="article-title">
+            <h1 th:text="${article.post.title}">Heading</h1>
+            <i class="material-icons">alarm</i>
+            <time th:datetime="${article.post.created}"
+                  th:text="${#dates.format(article.post.created, 'dd-MM-yyyy HH:mm')}"></time>
+            <i class="material-icons">face</i><span th:text="${article.post.createdBy}">Nguyễn Thế Đăng</span>
+            <!--                        <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei.</p>-->
         </div>
     </div>
 
-
+    <!--                <img th:src="${article.post.titleImage}" style="width:100%">-->
+    <div th:utext="${article.post.content}">Here is in database</div>
 </div>
+
 <!--    <ul th:each="article : ${articleMenu.get(0).yearlyArticles.get(0).monthlyArticles}">-->
 <!--        <li><a th:href="@{/article/}+${article.id}" th:text="${article.post.title}"></a></li>-->
 <!--    </ul>-->

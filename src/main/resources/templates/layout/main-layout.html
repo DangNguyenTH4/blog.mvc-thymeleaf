@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb" th:fragment="main-fragment (title, otherStaticResources, metaData, header, topmenu, leftmenu, mainContent, footer)">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title th:replace="${title}">Title</title>
+
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/dropdown.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/css.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+  <!-- Other javascript, css source files -->
+  <th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+
+  <!-- Metadata block -->
+  <th:block th:replace="${metaData} ?: ~{}"></th:block>
 </head>
 <body>
-$END$
+<!--<div th:insert="${topmenu} ?: ~{}">-->
+<!--  <h2>Page 1</h2>-->
+<!--</div>-->
+<!--<div th:insert="${leftmenu} ?: ~{}">-->
+<!--  <h2>Page 1</h2>-->
+<!--</div>-->
+<!--<div th:insert="${header} ?: ~{}">-->
+<!--  <h2>Page 1</h2>-->
+<!--</div>-->
+
+<!--MenuTop-->
+<div id="home-topmenu" th:replace="/layout/topmenu :: topmenu"></div>
+<!--End MenuTop-->
+<!--Left Menu-->
+<div id="home-leftmenu" th:replace="/layout/leftmenu :: leftmenu"></div>
+<!--End Left Menu-->
+
+<!--Dragon Fly-->
+<div id="home-header" th:replace="/layout/header :: header"></div>
+<!--End Dragon Fly-->
+
+<div class="page row">
+  <div class="container-fluid float-left offset-2">
+    <div class="row">
+      <div id="content" class="col-md-7 ">
+        <div  th:replace="${mainContent} ?: ~{}"></div>
+      </div>
+      <div id="ads" class="col-md-4"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
