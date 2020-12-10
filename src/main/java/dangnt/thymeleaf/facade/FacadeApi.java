@@ -2,6 +2,9 @@ package dangnt.thymeleaf.facade;
 
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.dto.PageDto;
+import dangnt.thymeleaf.object.dto.responsedto.JsonResponseDto;
+import dangnt.thymeleaf.sessionmanager.User;
+import org.springframework.http.ResponseEntity;
 
 public interface FacadeApi {
   PageDto getArticle(Long postId);
@@ -12,4 +15,6 @@ public interface FacadeApi {
   PageDto getAnObject();
   PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto);
   PageDto getArticleByTime(Integer year, Integer month, PageableAndSortDto pageableAndSortDto);
+  ResponseEntity<JsonResponseDto> countUserOnline();
+  void addNewUserOnline(User user);
 }

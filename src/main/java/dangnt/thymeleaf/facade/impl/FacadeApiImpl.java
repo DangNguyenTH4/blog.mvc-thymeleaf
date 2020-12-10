@@ -16,24 +16,29 @@ import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PostDto;
 import dangnt.thymeleaf.object.dto.SubjectDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.dto.responsedto.JsonResponseDto;
 import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.object.mapper.SubjectEntityMapper;
+import dangnt.thymeleaf.service.GlobalResourceService;
 import dangnt.thymeleaf.service.HeaderService;
 import dangnt.thymeleaf.service.ImageLinkService;
 import dangnt.thymeleaf.service.MetadataService;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
+import dangnt.thymeleaf.sessionmanager.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 //@Service("FacadeApiImpl")
 public class FacadeApiImpl implements FacadeApi {
-
+    @Autowired
+    private GlobalResourceService globalResourceService;
     @Autowired
     private FacadeFunctionFactory facadeFunctionFactory;
 
@@ -106,5 +111,21 @@ public class FacadeApiImpl implements FacadeApi {
                 e.printStackTrace();
             }
             return null;
+    }
+
+    @Override
+    public ResponseEntity<JsonResponseDto> countUserOnline() {
+        FacadeStrategy<TimeArticleForm> formFacadeStrategy = facadeFunctionFactory
+                .get(FacadeFunctionFactory.GET_USER_ONLINE);
+        try {
+            return formFacadeStrategy.getAjaxBody(null);
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public void addNewUserOnline(User user) {
+        globalResourceService.addNewUserOnline(user);
     }
 }

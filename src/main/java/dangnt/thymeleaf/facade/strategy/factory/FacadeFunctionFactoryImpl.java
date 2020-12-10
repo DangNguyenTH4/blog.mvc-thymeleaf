@@ -1,6 +1,8 @@
 package dangnt.thymeleaf.facade.strategy.factory;
 
 import dangnt.thymeleaf.facade.strategy.FacadeStrategy;
+import dangnt.thymeleaf.service.GlobalResourceService;
+import dangnt.thymeleaf.sessionmanager.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ public class FacadeFunctionFactoryImpl implements FacadeFunctionFactory {
             case GET_HOME: facadeStrategy = getHome; break;
             case GET_ARTICLE_BY_SUBJECT_ID: facadeStrategy = getArticlesBySubjectId; break;
             case GET_ARTICLE_BY_TIME : facadeStrategy = getArticleByTime; break;
+            case GET_USER_ONLINE : facadeStrategy = ajaxGetUserOnline; break;
             default:return null;
         }
         return facadeStrategy;
@@ -28,5 +31,9 @@ public class FacadeFunctionFactoryImpl implements FacadeFunctionFactory {
     private GetArticlesBySubjectId getArticlesBySubjectId;
     @Autowired
     private GetArticleByTime getArticleByTime;
+
+    //Ajax
+    @Autowired
+    private AjaxGetUserOnline ajaxGetUserOnline;
 
 }

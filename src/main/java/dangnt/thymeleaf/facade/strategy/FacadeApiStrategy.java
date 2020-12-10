@@ -1,15 +1,19 @@
 package dangnt.thymeleaf.facade.strategy;
 
+import dangnt.thymeleaf.facade.strategy.factory.FacadeFunctionFactory;
 import dangnt.thymeleaf.object.dto.HeadDto;
 import dangnt.thymeleaf.object.dto.MenuSubjectDto;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.YearlyArticleDto;
+import dangnt.thymeleaf.object.dto.responsedto.JsonResponseDto;
 import dangnt.thymeleaf.object.exception.WrongTypeException;
 import dangnt.thymeleaf.service.PostService;
 import dangnt.thymeleaf.service.SubjectService;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 public abstract  class FacadeApiStrategy<T> implements FacadeStrategy<T>{
 
@@ -46,5 +50,13 @@ public abstract  class FacadeApiStrategy<T> implements FacadeStrategy<T>{
 
   protected final Object getFoot(){
     return null;
+  }
+
+  @Deprecated
+  @Override
+  public ResponseEntity<JsonResponseDto> getAjaxBody(T object) {
+    JsonResponseDto<Object> result = new JsonResponseDto<>();
+    result.setBody(new Object());
+    return ResponseEntity.ok(result);
   }
 }

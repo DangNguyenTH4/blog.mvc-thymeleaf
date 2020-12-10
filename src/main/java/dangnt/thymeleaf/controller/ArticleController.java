@@ -4,8 +4,10 @@ import dangnt.thymeleaf.facade.FacadeApi;
 import dangnt.thymeleaf.object.dto.PageDto;
 import dangnt.thymeleaf.object.dto.PageableAndSortDto;
 import dangnt.thymeleaf.object.exception.NotFoundException;
+import dangnt.thymeleaf.sessionmanager.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/article")
 @Slf4j
+@Scope("session")
 public class ArticleController {
     @Autowired
     private FacadeApi facadeApi;
+    @Autowired
+    private User user;
     @GetMapping("/{postId}")
     public String getAnArticle(Model model, @PathVariable("postId") Long postId) throws InterruptedException {
+        facadeApi.addNewUserOnline(user);
+
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
 //        Thread t = new Thread(()->{
@@ -44,6 +51,7 @@ public class ArticleController {
     @GetMapping("/{year}/{month}")
     public String getArticles(Model model, @PathVariable("year") Integer year,
         @PathVariable("month") Integer month, @RequestParam(value = "pageIndex", required = false) Integer pageIndex) {
+        facadeApi.addNewUserOnline(user);
 
         PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
         pageableAndSortDto.setSortBy("created");
@@ -60,6 +68,8 @@ public class ArticleController {
     @GetMapping("/{year}/{month}/{postId}")
     public String getAnArticleInMonth(Model model, @PathVariable("year") Integer year,
         @PathVariable("month") Integer month, @PathVariable("postId") Long postId) {
+        facadeApi.addNewUserOnline(user);
+
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
         return "anArticle";
@@ -67,6 +77,8 @@ public class ArticleController {
 
     @GetMapping("/subject/{subjectId}")
     public String getAnArticleInMonth(Model model, @PathVariable("subjectId") Long subjectId, @RequestParam(value = "pageIndex", required = false) Integer pageIndex ) {
+        facadeApi.addNewUserOnline(user);
+
         PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
         pageableAndSortDto.setPageSize(10);
         pageableAndSortDto.setSortBy("created");
