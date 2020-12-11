@@ -12,8 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class JsonResponseDto<R> {
-  private Long time;
+  private Long time = System.currentTimeMillis();
   private R body;
   private String message;
-  private Integer status;
+  private Integer status = 200;
 }

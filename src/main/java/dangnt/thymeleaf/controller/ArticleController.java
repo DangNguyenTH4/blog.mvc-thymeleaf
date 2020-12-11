@@ -22,12 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ArticleController {
     @Autowired
     private FacadeApi facadeApi;
-    @Autowired
-    private User user;
     @GetMapping("/{postId}")
     public String getAnArticle(Model model, @PathVariable("postId") Long postId) throws InterruptedException {
-        facadeApi.addNewUserOnline(user);
-
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
 //        Thread t = new Thread(()->{
@@ -51,8 +47,6 @@ public class ArticleController {
     @GetMapping("/{year}/{month}")
     public String getArticles(Model model, @PathVariable("year") Integer year,
         @PathVariable("month") Integer month, @RequestParam(value = "pageIndex", required = false) Integer pageIndex) {
-        facadeApi.addNewUserOnline(user);
-
         PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
         pageableAndSortDto.setSortBy("created");
         pageableAndSortDto.setPageIndex(pageIndex == null ? 0 : pageIndex);
@@ -68,8 +62,6 @@ public class ArticleController {
     @GetMapping("/{year}/{month}/{postId}")
     public String getAnArticleInMonth(Model model, @PathVariable("year") Integer year,
         @PathVariable("month") Integer month, @PathVariable("postId") Long postId) {
-        facadeApi.addNewUserOnline(user);
-
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
         return "anArticle";
@@ -77,8 +69,6 @@ public class ArticleController {
 
     @GetMapping("/subject/{subjectId}")
     public String getAnArticleInMonth(Model model, @PathVariable("subjectId") Long subjectId, @RequestParam(value = "pageIndex", required = false) Integer pageIndex ) {
-        facadeApi.addNewUserOnline(user);
-
         PageableAndSortDto pageableAndSortDto = new PageableAndSortDto();
         pageableAndSortDto.setPageSize(10);
         pageableAndSortDto.setSortBy("created");

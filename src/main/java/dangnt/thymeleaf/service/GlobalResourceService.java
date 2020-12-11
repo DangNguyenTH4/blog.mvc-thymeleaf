@@ -9,5 +9,6 @@ public interface GlobalResourceService {
     Long countListUserOnline();
     boolean isExist(User user);
     void addNewUserOnline(User user);
+    void removeUserLeave(User user);
     void clearAnonymousUser();
 }

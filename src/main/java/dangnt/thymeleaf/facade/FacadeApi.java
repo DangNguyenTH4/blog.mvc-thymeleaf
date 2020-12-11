@@ -15,6 +15,7 @@ public interface FacadeApi {
   PageDto getAnObject();
   PageDto getArticleBySubjectId(Long subjectId, PageableAndSortDto pageableAndSortDto);
   PageDto getArticleByTime(Integer year, Integer month, PageableAndSortDto pageableAndSortDto);
-  ResponseEntity<JsonResponseDto> countUserOnline();
+  ResponseEntity<JsonResponseDto> countUserOnline(User user);
   void addNewUserOnline(User user);
+  void removeUserLeave(User user);
 }

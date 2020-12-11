@@ -31,11 +31,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
 
 //@Service("FacadeApiImpl")
+@Slf4j
 public class FacadeApiImpl implements FacadeApi {
     @Autowired
     private GlobalResourceService globalResourceService;
@@ -114,7 +117,9 @@ public class FacadeApiImpl implements FacadeApi {
     }
 
     @Override
-    public ResponseEntity<JsonResponseDto> countUserOnline() {
+    public ResponseEntity<JsonResponseDto> countUserOnline(User user) {
+        //Add to cache if not exist
+        this.addNewUserOnline(user);
         FacadeStrategy<TimeArticleForm> formFacadeStrategy = facadeFunctionFactory
                 .get(FacadeFunctionFactory.GET_USER_ONLINE);
         try {
@@ -126,6 +131,20 @@ public class FacadeApiImpl implements FacadeApi {
     }
     @Override
     public void addNewUserOnline(User user) {
-        globalResourceService.addNewUserOnline(user);
+        if (!globalResourceService.isExist(user)) {
+            String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
+            user.setSessionId(sessionId);
+            log.info("Add user online: {}", user.getSessionId());
+
+            globalResourceService.addNewUserOnline(user);
+        }
+    }
+
+    @Override
+    public void removeUserLeave(User user) {
+        if (!globalResourceService.isExist(user)) {
+            log.info("Remove user leave: {}", user.getSessionId());
+            globalResourceService.removeUserLeave(user);
+        }
     }
 }

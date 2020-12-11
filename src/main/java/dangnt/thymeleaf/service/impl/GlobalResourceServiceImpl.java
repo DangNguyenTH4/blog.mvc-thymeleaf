@@ -37,6 +37,11 @@ public class GlobalResourceServiceImpl implements GlobalResourceService {
     }
 
     @Override
+    public void removeUserLeave(User user) {
+        allUserForWrite.remove(user);
+    }
+
+    @Override
     public void clearAnonymousUser() {
 
         Iterator<User> iterator = allUserForWrite.iterator();

@@ -68,3 +68,10 @@
 .imgContent{
   width:100%;
 }
+
+#userOnline{
+    color: black;
+    text-align: center;
+    position: fixed;
+    bottom: 15px;
+}
