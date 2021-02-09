@@ -22,7 +22,7 @@ public class UserController {
   public String index(Model model) {
     List<FriendEntity> users = userService.getAllUser();
 //    User user = new User();
-//    user.setEmail("dangnt@fsoft.com.vn");
+//    user.setEmail("John");
 //    user.setId(1L);
 //    user.setName("DangNT");
 //    user.setPhone("0976949132");
