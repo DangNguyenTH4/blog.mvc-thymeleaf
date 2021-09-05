@@ -26,21 +26,6 @@ public class ArticleController {
     public String getAnArticle(Model model, @PathVariable("postId") Long postId) throws InterruptedException {
         PageDto pageDto = facadeApi.getArticle(postId);
         ControllerUtils.buildModelForPage(model, pageDto);
-//        Thread t = new Thread(()->{
-//
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            log.info("SLEEP HERE!");
-//        });
-//        t.start();
-//        t.join();
-//        log.info("Done sleep thread.");
-//        log.info("SLEEP HERE!");
-//        Thread.sleep(3000);
-//        log.info("SLEEP DONE!");
         return "anArticle";
     }
 
